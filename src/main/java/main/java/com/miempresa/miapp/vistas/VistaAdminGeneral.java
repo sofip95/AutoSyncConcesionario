@@ -108,14 +108,20 @@ public class VistaAdminGeneral extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReversaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReversaActionPerformed
+        VistaLogin vc = new VistaLogin();
+        vc.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnReversaActionPerformed
 
     private void btnEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpleadosActionPerformed
+        VistaGestionEmpleados vc = new VistaGestionEmpleados();
+        vc.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnEmpleadosActionPerformed
 
     private void btnVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVehiculosActionPerformed
+        VistaGestionVehiculos vc = new VistaGestionVehiculos();
+        vc.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVehiculosActionPerformed
 
@@ -149,7 +155,7 @@ public class VistaAdminGeneral extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaAdminGeneral().setVisible(true);
+                new VistaLogin().setVisible(true);
             }
         });
     }
