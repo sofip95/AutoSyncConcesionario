@@ -61,6 +61,11 @@ public class VistaRegistrarse extends javax.swing.JFrame {
 
         btnRgeistrarse.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         btnRgeistrarse.setText("Registrarse");
+        btnRgeistrarse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRgeistrarseActionPerformed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         jLabel7.setText("Contraseña:");
@@ -227,6 +232,10 @@ public class VistaRegistrarse extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCorreoActionPerformed
 
+    private void btnRgeistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRgeistrarseActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRgeistrarseActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -257,7 +266,7 @@ public class VistaRegistrarse extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaRegistrarse().setVisible(true);
+                new VistaLogin().setVisible(true);
             }
         });
     }
