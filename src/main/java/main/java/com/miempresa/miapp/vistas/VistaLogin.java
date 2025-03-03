@@ -4,6 +4,8 @@
  */
 package main.java.com.miempresa.miapp.vistas;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Victus
@@ -15,6 +17,7 @@ public class VistaLogin extends javax.swing.JFrame {
      */
     public VistaLogin() {
         initComponents();
+        setLocationRelativeTo(this);
     }
 
     /**
@@ -37,9 +40,9 @@ public class VistaLogin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Concesionario AutoSync", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Dialog", 1, 36))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Concesionario AutoSync", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Dialog", 1, 36))); // NOI18N
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Login", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Dialog", 0, 24))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Login", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Dialog", 0, 24))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         jLabel1.setText("Id:");
@@ -79,9 +82,9 @@ public class VistaLogin extends javax.swing.JFrame {
                 .addGap(37, 37, 37))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnRgeistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnIniciarSesion))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnRgeistrarse, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                    .addComponent(btnIniciarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(96, 96, 96))
         );
         jPanel2Layout.setVerticalGroup(
@@ -134,9 +137,27 @@ public class VistaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
-        VistaCliente vc = new VistaCliente();
-        vc.setVisible(true);
-        this.dispose();
+        if(txtId.getText().isEmpty()||txtContrasena.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Relleno los campos");
+        }else{
+            if(txtId.getText().equals("1")&&txtContrasena.getText().equals("1")){
+            VistaAdminGeneral vc = new VistaAdminGeneral();
+            vc.setVisible(true);
+            this.dispose();
+         }else if(txtId.getText().equals("2")&&txtContrasena.getText().equals("2")){
+            VistaEmpleado vc = new VistaEmpleado();
+            vc.setVisible(true);
+            this.dispose();
+         }else if(txtId.getText().equals("3")&&txtContrasena.getText().equals("3")){
+            VistaCliente vc = new VistaCliente();
+            vc.setVisible(true);
+            this.dispose();
+         }else{
+             JOptionPane.showMessageDialog(null, "Datos erróneos");
+         }
+        }
+
+        
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     private void btnRgeistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRgeistrarseActionPerformed

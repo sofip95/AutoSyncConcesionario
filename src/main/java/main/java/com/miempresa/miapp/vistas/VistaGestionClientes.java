@@ -15,6 +15,7 @@ public class VistaGestionClientes extends javax.swing.JFrame {
      */
     public VistaGestionClientes() {
         initComponents();
+        setLocationRelativeTo(this);
     }
 
     /**
@@ -87,12 +88,22 @@ public class VistaGestionClientes extends javax.swing.JFrame {
 
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {"3", "Juan", "18", "3138796677", "juan@gmail.com", "Desarrollo web"},
+                {"5", "Miguel", "20", "3126665544", "miguel@gmail.com", "Backend"},
+                {"6", "Santiago", "21", "3158886677", "santiago@gmail.com", "Videojuegos"}
             },
             new String [] {
-                "", "", "", "", "", "", "", ""
+                "Id", "Nombre", "Edad", "Telefono", "Correo", "Intereses"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(jTable);
 
         txtCorreo.addActionListener(new java.awt.event.ActionListener() {

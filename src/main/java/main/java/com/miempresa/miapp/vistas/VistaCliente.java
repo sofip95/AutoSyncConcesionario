@@ -15,6 +15,7 @@ public class VistaCliente extends javax.swing.JFrame {
      */
     public VistaCliente() {
         initComponents();
+        setLocationRelativeTo(this);
     }
 
     /**
@@ -159,7 +160,7 @@ public class VistaCliente extends javax.swing.JFrame {
     private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
         // TODO add your handling code here:
         VistaHistorial vc = new VistaHistorial();
-        vc.setVisble(true);
+        vc.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnHistorialActionPerformed
 
