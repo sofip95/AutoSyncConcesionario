@@ -4,6 +4,8 @@
  */
 package main.java.com.miempresa.miapp.vistas;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author sofia
@@ -15,6 +17,7 @@ public class VistaGestionVehiculos extends javax.swing.JFrame {
      */
     public VistaGestionVehiculos() {
         initComponents();
+        setLocationRelativeTo(this);
     }
 
     /**
@@ -79,12 +82,31 @@ public class VistaGestionVehiculos extends javax.swing.JFrame {
 
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {"KDV331", "Volkswagen", "Golf", "2020", "Rojo", "25.000"},
+                {"RET567", "Toyota", "Corolla", "2019", "Blanco", "20.500"},
+                {"JHT658", "Ford", "Mustang", "2021", "Negro", "45.000"},
+                {"LHN906", "Honda", "Civic", "2018", "Azul", "20.000"},
+                {"GUT850", "Chevrolet", "Cruze", "2022", "Gris", "23.000"}
             },
             new String [] {
-                "", "", "", "", "", "", "", ""
+                "Placa", "Marca", "Modelo", "Año", "Color", "Precio"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(jTable);
 
         txtPassword.addActionListener(new java.awt.event.ActionListener() {
@@ -209,23 +231,24 @@ public class VistaGestionVehiculos extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 181, Short.MAX_VALUE))
+                .addGap(0, 204, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(379, 379, 379)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnRegistrar)
-                        .addComponent(btnEditar))
-                    .addGap(35, 35, 35)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnEliminar)
-                        .addComponent(btnBuscar))
-                    .addContainerGap(35, Short.MAX_VALUE))
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addGap(39, 39, 39)
-                    .addComponent(jLabel2)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(379, 379, 379)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnRegistrar)
+                                .addComponent(btnEditar))
+                            .addGap(35, 35, 35)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnEliminar)
+                                .addComponent(btnBuscar)))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(39, 39, 39)
+                            .addComponent(jLabel2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addContainerGap(46, Short.MAX_VALUE)))
         );
 
@@ -250,9 +273,20 @@ public class VistaGestionVehiculos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReversaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReversaActionPerformed
-        VistaAdminGeneral vc = new VistaAdminGeneral();
-        vc.setVisible(true);
-        this.dispose();
+       int answer = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el id:"));
+        switch (answer) {
+            case 1 -> {
+                VistaAdminGeneral vc = new VistaAdminGeneral();
+                vc.setVisible(true);
+                this.dispose();
+            }
+            case 2 -> {
+                VistaEmpleado ve = new VistaEmpleado();
+                ve.setVisible(true);
+                this.dispose();
+            }
+            default -> JOptionPane.showMessageDialog(null, "Datos incorrectos");
+        }
     }//GEN-LAST:event_btnReversaActionPerformed
 
     private void txtTelefono2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefono2ActionPerformed
@@ -335,8 +369,6 @@ public class VistaGestionVehiculos extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNombreUsuario;
     private javax.swing.JTextField txtPassword;
-    private javax.swing.JTextField txtTelefono;
-    private javax.swing.JTextField txtTelefono1;
     private javax.swing.JTextField txtTelefono2;
     // End of variables declaration//GEN-END:variables
 }

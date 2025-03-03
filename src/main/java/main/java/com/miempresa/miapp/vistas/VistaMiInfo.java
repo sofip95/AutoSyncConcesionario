@@ -15,6 +15,7 @@ public class VistaMiInfo extends javax.swing.JFrame {
      */
     public VistaMiInfo() {
         initComponents();
+        setLocationRelativeTo(this);
     }
 
     /**
@@ -46,7 +47,7 @@ public class VistaMiInfo extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mi Informacion", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Dialog", 1, 36))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Mi Informacion", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Dialog", 1, 36))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         jLabel1.setText("id:");
@@ -68,6 +69,35 @@ public class VistaMiInfo extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         jLabel7.setText("Contraseña:");
+
+        txtPassword.setText("3");
+        txtPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPasswordActionPerformed(evt);
+            }
+        });
+
+        txtIntereses.setText("Desarrollo web");
+
+        txtCorreo.setText("juan@gmail.com");
+
+        txtTelefono.setText("3138796677");
+        txtTelefono.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTelefonoActionPerformed(evt);
+            }
+        });
+
+        txtEdad.setText("18");
+        txtEdad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEdadActionPerformed(evt);
+            }
+        });
+
+        txtNombre.setText("juan");
+
+        txtId.setText("3");
 
         btnReversa.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         btnReversa.setText("←");
@@ -189,6 +219,18 @@ public class VistaMiInfo extends javax.swing.JFrame {
         ve.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnReversaActionPerformed
+
+    private void txtEdadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEdadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEdadActionPerformed
+
+    private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTelefonoActionPerformed
+
+    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPasswordActionPerformed
 
     /**
      * @param args the command line arguments

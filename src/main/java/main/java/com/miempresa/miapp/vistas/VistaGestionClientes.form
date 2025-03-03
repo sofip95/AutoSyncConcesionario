@@ -226,15 +226,37 @@
             <Component class="javax.swing.JTable" name="jTable">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="8" rowCount="0">
-                    <Column editable="true" title="" type="java.lang.Object"/>
-                    <Column editable="true" title="" type="java.lang.Object"/>
-                    <Column editable="true" title="" type="java.lang.Object"/>
-                    <Column editable="true" title="" type="java.lang.Object"/>
-                    <Column editable="true" title="" type="java.lang.Object"/>
-                    <Column editable="true" title="" type="java.lang.Object"/>
-                    <Column editable="true" title="" type="java.lang.Object"/>
-                    <Column editable="true" title="" type="java.lang.Object"/>
+                  <Table columnCount="6" rowCount="3">
+                    <Column editable="false" title="Id" type="java.lang.Object">
+                      <Data value="3"/>
+                      <Data value="5"/>
+                      <Data value="6"/>
+                    </Column>
+                    <Column editable="false" title="Nombre" type="java.lang.Object">
+                      <Data value="Juan"/>
+                      <Data value="Miguel"/>
+                      <Data value="Santiago"/>
+                    </Column>
+                    <Column editable="false" title="Edad" type="java.lang.Object">
+                      <Data value="18"/>
+                      <Data value="20"/>
+                      <Data value="21"/>
+                    </Column>
+                    <Column editable="false" title="Telefono" type="java.lang.Object">
+                      <Data value="3138796677"/>
+                      <Data value="3126665544"/>
+                      <Data value="3158886677"/>
+                    </Column>
+                    <Column editable="false" title="Correo" type="java.lang.Object">
+                      <Data value="juan@gmail.com"/>
+                      <Data value="miguel@gmail.com"/>
+                      <Data value="santiago@gmail.com"/>
+                    </Column>
+                    <Column editable="false" title="Intereses" type="java.lang.Object">
+                      <Data value="Desarrollo web"/>
+                      <Data value="Backend"/>
+                      <Data value="Videojuegos"/>
+                    </Column>
                   </Table>
                 </Property>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">

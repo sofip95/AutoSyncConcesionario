@@ -15,6 +15,7 @@ public class VistaRegistrarse extends javax.swing.JFrame {
      */
     public VistaRegistrarse() {
         initComponents();
+        setLocationRelativeTo(this);
     }
 
     /**

@@ -15,6 +15,7 @@ public class VistaCliente extends javax.swing.JFrame {
      */
     public VistaCliente() {
         initComponents();
+        setLocationRelativeTo(this);
     }
 
     /**

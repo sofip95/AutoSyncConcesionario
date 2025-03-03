@@ -15,6 +15,7 @@ public class VistaAdminGeneral extends javax.swing.JFrame {
      */
     public VistaAdminGeneral() {
         initComponents();
+        setLocationRelativeTo(this);
     }
 
     /**

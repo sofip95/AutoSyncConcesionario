@@ -15,6 +15,7 @@ public class VistaGestionEmpleados extends javax.swing.JFrame {
      */
     public VistaGestionEmpleados() {
         initComponents();
+        setLocationRelativeTo(this);
     }
 
     /**
@@ -56,12 +57,21 @@ public class VistaGestionEmpleados extends javax.swing.JFrame {
 
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {"2", "Sofia", "18", "3177778899", "sofia@gmail.com", "5 años en Google"},
+                {"7", "Andrea", "19", "3139992287", "andrea@gmail.com", "15 años en Facebook"}
             },
             new String [] {
-                "", "", "", "", "", "", "", ""
+                "Id", "Nombre", "Edad", "Telefono", "Correo", "Experiencia"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(jTable);
 
         jLabel1.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
@@ -192,7 +202,7 @@ public class VistaGestionEmpleados extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
