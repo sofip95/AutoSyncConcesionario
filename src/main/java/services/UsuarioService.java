@@ -8,7 +8,7 @@ import exceptions.InvalidUsuarioDataException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import DTO.Usuario;
-import respositories.UsuarioRepository;
+import repositories.UsuarioRepository;
 import validators.UsuarioValidator;
 
 /**
