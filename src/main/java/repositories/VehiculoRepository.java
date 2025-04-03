@@ -18,8 +18,8 @@ import DTO.Vehiculo;
  * @author sofia
  */
 public class VehiculoRepository {
-         public Vehiculo findById(String id) throws SQLException {
-        String query = "SELECT * FROM Vehiculo WHERE placa = " + id;
+         public Vehiculo findById(String placa) throws SQLException {
+        String query = "SELECT * FROM Vehiculo WHERE placa = '" + placa +"'";
         try (Connection connection = DatabaseConfig.getConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(query)) {
             if (resultSet.next()) {
                 return new Vehiculo(
@@ -42,6 +42,31 @@ public class VehiculoRepository {
             statement.executeUpdate(query);
         }
     }
+    
+     public void updateVehiculo (Vehiculo vehiculo) throws SQLException {
+    String query = "UPDATE Vehiculo SET marca = ?, modelo = ?, anio = ?, color = ?, precio_venta = ? WHERE placa = ?";
+    
+    try (Connection connection = DatabaseConfig.getConnection(); 
+         PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        
+        preparedStatement.setString(1, vehiculo.getMarca());
+        preparedStatement.setString(2, vehiculo.getModelo());
+        preparedStatement.setString(3, vehiculo.getAnio());
+        preparedStatement.setString(4, vehiculo.getColor());
+        preparedStatement.setFloat(5, vehiculo.getPrecio_venta());
+        preparedStatement.setString(6, vehiculo.getPlaca()); 
+        preparedStatement.executeUpdate();
+    }
+}
+
+    public void deleteVehiculo(String placa) throws SQLException {
+        String query = "DELETE FROM vehiculo WHERE placa = '" + placa + "'";
+        try (Connection connection = DatabaseConfig.getConnection(); Statement statement = connection.createStatement()) {
+            statement.executeUpdate(query);
+        }
+    }
+
+    
      public ArrayList<Vehiculo> listarVehiculos() throws SQLException {
         ArrayList<Vehiculo> vehiculos = new ArrayList<>();
         String query = "SELECT placa,marca,modelo,anio,color,precio_venta FROM Vehiculo;";
