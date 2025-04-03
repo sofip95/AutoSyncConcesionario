@@ -8,7 +8,7 @@ package repositories;
 import io.github.cdimascio.dotenv.Dotenv;
 
 import org.mindrot.jbcrypt.BCrypt;
-import com.mycompany.project.DatabaseConfig;
+import com.mycompany.autosyncconcesionario.DatabaseConfig;
 import java.awt.List;
 import java.sql.Connection;
 import java.sql.DriverManager;
