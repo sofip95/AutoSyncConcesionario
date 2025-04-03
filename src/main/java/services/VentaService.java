@@ -8,6 +8,7 @@ import DTO.Venta;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import repositories.VentaRepository;
+import validators.VentaValidator;
 
 /**
  *
