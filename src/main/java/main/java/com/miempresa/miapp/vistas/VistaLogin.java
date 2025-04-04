@@ -5,6 +5,7 @@
 package main.java.com.miempresa.miapp.vistas;
 
 import javax.swing.JOptionPane;
+import services.UsuarioService;
 
 /**
  *
@@ -12,12 +13,15 @@ import javax.swing.JOptionPane;
  */
 public class VistaLogin extends javax.swing.JFrame {
 
+    UsuarioService usuarioSer;
+    
     /**
      * Creates new form VistaLogin
      */
-    public VistaLogin() {
+    public VistaLogin(UsuarioService usuarioSer) {
         initComponents();
         setLocationRelativeTo(this);
+        this.usuarioSer = usuarioSer == null ? new UsuarioService() : usuarioSer;
     }
 
     /**
@@ -196,7 +200,7 @@ public class VistaLogin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaLogin().setVisible(true);
+                new VistaLogin(null).setVisible(true);
             }
         });
     }
