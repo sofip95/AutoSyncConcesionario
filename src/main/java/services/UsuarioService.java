@@ -23,6 +23,10 @@ public class UsuarioService {
         return usuarioRepository.findById(id);
     }
 
+    public boolean login(int id, String password) {
+        return usuarioRepository.login(id, password);
+    }
+
     public void createUser(String contrasenia, String nombre, int edad, String telefono, String correo, String descripcion, String rol) throws
             SQLException, InvalidUsuarioDataException {
         if (!UsuarioValidator.validateContrasenia(contrasenia) || !UsuarioValidator.validateName(nombre) || !UsuarioValidator.validateEdad(edad) || !UsuarioValidator.validateTelefono(telefono) || !UsuarioValidator.validateEmail(correo) || !UsuarioValidator.validateDescripcion(descripcion) || !UsuarioValidator.validateRol(rol)) {

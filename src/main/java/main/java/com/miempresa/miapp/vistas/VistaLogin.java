@@ -4,6 +4,11 @@
  */
 package main.java.com.miempresa.miapp.vistas;
 
+import DTO.Usuario;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import services.UsuarioService;
 
@@ -141,25 +146,37 @@ public class VistaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
-        if(txtId.getText().isEmpty()||txtContrasena.getText().isEmpty()){
+       if(txtId.getText().isEmpty()||txtContrasena.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Relleno los campos");
         }else{
-            if(txtId.getText().equals("1")&&txtContrasena.getText().equals("1")){
-            VistaAdminGeneral vc = new VistaAdminGeneral();
-            vc.setVisible(true);
-            this.dispose();
-         }else if(txtId.getText().equals("2")&&txtContrasena.getText().equals("2")){
-            VistaEmpleado vc = new VistaEmpleado();
-            vc.setVisible(true);
-            this.dispose();
-         }else if(txtId.getText().equals("3")&&txtContrasena.getText().equals("3")){
-            VistaCliente vc = new VistaCliente();
-            vc.setVisible(true);
-            this.dispose();
-         }else{
-             JOptionPane.showMessageDialog(null, "Datos erróneos");
-         }
+           try{
+            int id = Integer.parseInt(txtId.getText());
+            String contrasenia = txtContrasena.getText();
+            boolean success = usuarioSer.login(id, contrasenia);
+            if(success){
+            Usuario usuario = usuarioSer.getUsuarioById(id);
+                if(usuario.getRol().equals("Admin")){
+                VistaAdminGeneral vc = new VistaAdminGeneral();
+                vc.setVisible(true);
+                this.dispose();
+                }else if(usuario.getRol().equals("Cliente")){
+                VistaCliente vc = new VistaCliente();
+                vc.setVisible(true);
+                this.dispose();
+                }else if(usuario.getRol().equals("Empleado")){
+                VistaEmpleado vc = new VistaEmpleado();
+                vc.setVisible(true);
+                this.dispose();
+                }
+
+            }else{
+            JOptionPane.showMessageDialog(null, "Datos erróneos");
+            }
+           }catch (SQLException ex) {
+            ex.getMessage();
+            }
         }
+
 
         
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
