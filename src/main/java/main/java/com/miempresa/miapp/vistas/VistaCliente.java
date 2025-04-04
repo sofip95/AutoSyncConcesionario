@@ -146,7 +146,7 @@ public class VistaCliente extends javax.swing.JFrame {
 
     private void btnReversaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReversaActionPerformed
         // TODO add your handling code here:
-        VistaLogin vc = new VistaLogin();
+        VistaLogin vc = new VistaLogin(null);
         vc.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnReversaActionPerformed
@@ -215,7 +215,7 @@ public class VistaCliente extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaLogin().setVisible(true);
+                new VistaLogin(null).setVisible(true);
             }
         });
     }

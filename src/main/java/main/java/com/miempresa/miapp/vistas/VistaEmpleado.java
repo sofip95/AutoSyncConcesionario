@@ -125,7 +125,7 @@ public class VistaEmpleado extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReversaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReversaActionPerformed
-        VistaLogin vc = new VistaLogin();
+        VistaLogin vc = new VistaLogin(null);
         vc.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnReversaActionPerformed
@@ -185,7 +185,7 @@ public class VistaEmpleado extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaLogin().setVisible(true);
+                new VistaLogin(null).setVisible(true);
             }
         });
     }
