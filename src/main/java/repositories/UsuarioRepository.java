@@ -44,6 +44,26 @@ public class UsuarioRepository {
             }
         }
     }
+     public boolean login(int id, String contrasenia) {
+        String query = "SELECT contrasenia FROM usuario WHERE id_usuario = ?";
+
+        try (Connection conn = DatabaseConfig.getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String storedPasswordHash = rs.getString("contrasenia");
+
+                return checkPassword(contrasenia, storedPasswordHash);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 
     public void save(Usuario usuario) throws SQLException {
         String hashedPassword = hashPassword(usuario.getContrasenia());
