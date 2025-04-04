@@ -4,18 +4,21 @@
  */
 package main.java.com.miempresa.miapp.vistas;
 
+import DTO.Usuario;
+
 /**
  *
  * @author sofia
  */
 public class VistaCliente extends javax.swing.JFrame {
-
+    Usuario usuario;
     /**
      * Creates new form VistaCliente
      */
-    public VistaCliente() {
+    public VistaCliente(Usuario usuario) {
         initComponents();
         setLocationRelativeTo(this);
+        this.usuario = usuario;
     }
 
     /**
@@ -152,35 +155,35 @@ public class VistaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReversaActionPerformed
 
     private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
-        VistaMiInfo vc = new VistaMiInfo();
+        VistaMiInfo vc = new VistaMiInfo(usuario);
         vc.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnInfoActionPerformed
 
     private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
         // TODO add your handling code here:
-        VistaHistorial vc = new VistaHistorial();
+        VistaHistorial vc = new VistaHistorial(usuario);
         vc.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnHistorialActionPerformed
 
     private void btnChatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChatActionPerformed
         // TODO add your handling code here:
-        VistaChatBot vc = new VistaChatBot();
+        VistaChatBot vc = new VistaChatBot(usuario);
         vc.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnChatActionPerformed
 
     private void btnPruebaMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPruebaMActionPerformed
         // TODO add your handling code here:
-        VistaSolicitarPrueba vc = new VistaSolicitarPrueba();
+        VistaSolicitarPrueba vc = new VistaSolicitarPrueba(usuario);
         vc.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnPruebaMActionPerformed
 
     private void btnVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVehiculoActionPerformed
         // TODO add your handling code here:
-        VistaComprarVehiculo vc = new VistaComprarVehiculo();
+        VistaComprarVehiculo vc = new VistaComprarVehiculo(usuario);
         vc.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVehiculoActionPerformed

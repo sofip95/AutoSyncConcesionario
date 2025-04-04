@@ -4,6 +4,7 @@
  */
 package main.java.com.miempresa.miapp.vistas;
 
+import DTO.Usuario;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,12 +13,15 @@ import javax.swing.JOptionPane;
  */
 public class VistaGestionVehiculos extends javax.swing.JFrame {
 
+    Usuario usuario;
+
     /**
      * Creates new form VistaGestionVehiculos
      */
-    public VistaGestionVehiculos() {
+    public VistaGestionVehiculos(Usuario usuario) {
         initComponents();
         setLocationRelativeTo(this);
+        this.usuario = usuario;
     }
 
     /**
@@ -273,20 +277,18 @@ public class VistaGestionVehiculos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReversaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReversaActionPerformed
-       int answer = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el id:"));
-        switch (answer) {
-            case 1 -> {
-                VistaAdminGeneral vc = new VistaAdminGeneral();
-                vc.setVisible(true);
-                this.dispose();
-            }
-            case 2 -> {
-                VistaEmpleado ve = new VistaEmpleado();
-                ve.setVisible(true);
-                this.dispose();
-            }
-            default -> JOptionPane.showMessageDialog(null, "Datos incorrectos");
+        if (usuario.getRol().equals("Admin")) {
+            VistaAdminGeneral vc = new VistaAdminGeneral(usuario);
+            vc.setVisible(true);
+            this.dispose();
+        } else if (usuario.getRol().equals("Empleado")) {
+            VistaEmpleado ve = new VistaEmpleado(usuario);
+            ve.setVisible(true);
+            this.dispose();
+        }else{
+        JOptionPane.showMessageDialog(null, "Invalido");
         }
+
     }//GEN-LAST:event_btnReversaActionPerformed
 
     private void txtTelefono2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefono2ActionPerformed
