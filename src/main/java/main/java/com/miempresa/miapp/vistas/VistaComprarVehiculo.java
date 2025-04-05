@@ -4,18 +4,21 @@
  */
 package main.java.com.miempresa.miapp.vistas;
 
+import DTO.Usuario;
+
 /**
  *
  * @author JUAN
  */
 public class VistaComprarVehiculo extends javax.swing.JFrame {
-
+    Usuario usuario; 
     /**
      * Creates new form VistaCompraVehiculo
      */
-    public VistaComprarVehiculo() {
+    public VistaComprarVehiculo(Usuario usuario) {
         initComponents();
         setLocationRelativeTo(this);
+        this.usuario = usuario;
     }
 
     /**
@@ -157,7 +160,7 @@ public class VistaComprarVehiculo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReversaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReversaActionPerformed
-        VistaCliente vt = new VistaCliente();
+        VistaCliente vt = new VistaCliente(usuario);
         vt.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnReversaActionPerformed

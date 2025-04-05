@@ -154,17 +154,17 @@ public class VistaLogin extends javax.swing.JFrame {
             String contrasenia = txtContrasena.getText();
             boolean success = usuarioSer.login(id, contrasenia);
             if(success){
-            Usuario usuario = usuarioSer.getUsuarioById(id);
-                if(usuario.getRol().equals("Admin")){
-                VistaAdminGeneral vc = new VistaAdminGeneral();
+            Usuario aux = usuarioSer.getUsuarioById(id);
+                if(aux.getRol().equals("Admin")){
+                VistaAdminGeneral vc = new VistaAdminGeneral( aux);
                 vc.setVisible(true);
                 this.dispose();
-                }else if(usuario.getRol().equals("Cliente")){
-                VistaCliente vc = new VistaCliente();
+                }else if(aux.getRol().equals("Cliente")){
+                VistaCliente vc = new VistaCliente( aux);
                 vc.setVisible(true);
                 this.dispose();
-                }else if(usuario.getRol().equals("Empleado")){
-                VistaEmpleado vc = new VistaEmpleado();
+                }else if(aux.getRol().equals("Empleado")){
+                VistaEmpleado vc = new VistaEmpleado( aux);
                 vc.setVisible(true);
                 this.dispose();
                 }

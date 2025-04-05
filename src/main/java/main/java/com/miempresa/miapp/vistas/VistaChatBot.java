@@ -4,18 +4,21 @@
  */
 package main.java.com.miempresa.miapp.vistas;
 
+import DTO.Usuario;
+
 /**
  *
  * @author JUAN
  */
 public class VistaChatBot extends javax.swing.JFrame {
-
+    Usuario usuario;
     /**
      * Creates new form VistaChatBot
      */
-    public VistaChatBot() {
+    public VistaChatBot(Usuario usuario) {
         initComponents();
         setLocationRelativeTo(this);
+        this.usuario = usuario;
     }
 
     /**
@@ -101,7 +104,7 @@ public class VistaChatBot extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReversaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReversaActionPerformed
-        VistaCliente vc = new VistaCliente();
+        VistaCliente vc = new VistaCliente(usuario);
         vc.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnReversaActionPerformed

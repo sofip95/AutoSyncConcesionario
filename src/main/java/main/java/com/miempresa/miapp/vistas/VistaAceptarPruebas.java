@@ -4,6 +4,7 @@
  */
 package main.java.com.miempresa.miapp.vistas;
 
+import DTO.Usuario;
 import javax.swing.JOptionPane;
 
 /**
@@ -11,13 +12,14 @@ import javax.swing.JOptionPane;
  * @author Victus
  */
 public class VistaAceptarPruebas extends javax.swing.JFrame {
-
+    Usuario usuario ;
     /**
      * Creates new form VistaAceptarPruebas
      */
-    public VistaAceptarPruebas() {
+    public VistaAceptarPruebas(Usuario usuario) {
         initComponents();
         setLocationRelativeTo(this);
+        this.usuario = usuario;
     }
 
     /**
@@ -162,7 +164,7 @@ public class VistaAceptarPruebas extends javax.swing.JFrame {
     private void btnReversaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReversaActionPerformed
         // TODO add your handling code here:
         
-                VistaEmpleado ve = new VistaEmpleado();
+                VistaEmpleado ve = new VistaEmpleado(usuario);
                 ve.setVisible(true);
                 this.dispose();
            
