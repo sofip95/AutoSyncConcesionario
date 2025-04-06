@@ -137,9 +137,13 @@ public class VistaEmpleado extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReversaActionPerformed
 
     private void btnGestionVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionVehiculoActionPerformed
-        VistaGestionVehiculos vc = new VistaGestionVehiculos(usuario);
-        vc.setVisible(true);
-        this.dispose();
+        try {
+            VistaGestionVehiculos vc = new VistaGestionVehiculos(usuario);
+            vc.setVisible(true);
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(VistaEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnGestionVehiculoActionPerformed
 
     private void btnAceptarPruebasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarPruebasActionPerformed
