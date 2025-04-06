@@ -5,7 +5,11 @@
 package main.java.com.miempresa.miapp.vistas;
 
 import DTO.Usuario;
+import DTO.Vehiculo;
+import exceptions.InvalidVehiculoDataException;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import services.VehiculoService;
 
 /**
  *
@@ -14,14 +18,30 @@ import javax.swing.JOptionPane;
 public class VistaGestionVehiculos extends javax.swing.JFrame {
 
     Usuario usuario;
-
+    VehiculoService vehiculoService;
+    
     /**
      * Creates new form VistaGestionVehiculos
      */
-    public VistaGestionVehiculos(Usuario usuario) {
+    public VistaGestionVehiculos(Usuario usuario) throws SQLException {
         initComponents();
         setLocationRelativeTo(this);
         this.usuario = usuario;
+        this.vehiculoService = vehiculoService == null ? new VehiculoService() : vehiculoService;
+        limpiarCampos();
+        llenarTabla();
+    }
+    
+    private void llenarTabla() throws SQLException {
+        try {
+            jTable.setModel(vehiculoService.llenarTabla());
+        } catch (SQLException ex) {
+            System.out.println("Error al llenar la tabla: " + ex.getMessage());
+            ex.printStackTrace(); 
+        } catch (RuntimeException ex) {
+            System.out.println("Error de ejecución: " + ex.getMessage());
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -36,15 +56,15 @@ public class VistaGestionVehiculos extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         btnReversa = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
-        txtTelefono2 = new javax.swing.JTextField();
+        txtPlaca = new javax.swing.JTextField();
+        txtMarca = new javax.swing.JTextField();
         btnRegistrar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
-        txtPassword = new javax.swing.JTextField();
-        txtCodigo = new javax.swing.JTextField();
+        txtColor = new javax.swing.JTextField();
+        txtPrecio = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        txtCorreo = new javax.swing.JTextField();
+        txtAño = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -53,11 +73,11 @@ public class VistaGestionVehiculos extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
-        txtNombreUsuario = new javax.swing.JTextField();
+        txtModelo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Gestion Vehiculos", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Dialog", 1, 32))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Gestion Vehiculos", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Dialog", 1, 32))); // NOI18N
 
         btnReversa.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         btnReversa.setText("←");
@@ -70,9 +90,9 @@ public class VistaGestionVehiculos extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setText("Tabla Vehiculos");
 
-        txtTelefono2.addActionListener(new java.awt.event.ActionListener() {
+        txtMarca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTelefono2ActionPerformed(evt);
+                txtMarcaActionPerformed(evt);
             }
         });
 
@@ -86,36 +106,17 @@ public class VistaGestionVehiculos extends javax.swing.JFrame {
 
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"KDV331", "Volkswagen", "Golf", "2020", "Rojo", "25.000"},
-                {"RET567", "Toyota", "Corolla", "2019", "Blanco", "20.500"},
-                {"JHT658", "Ford", "Mustang", "2021", "Negro", "45.000"},
-                {"LHN906", "Honda", "Civic", "2018", "Azul", "20.000"},
-                {"GUT850", "Chevrolet", "Cruze", "2022", "Gris", "23.000"}
+
             },
             new String [] {
-                "Placa", "Marca", "Modelo", "Año", "Color", "Precio"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         jScrollPane2.setViewportView(jTable);
 
-        txtPassword.addActionListener(new java.awt.event.ActionListener() {
+        txtColor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPasswordActionPerformed(evt);
+                txtColorActionPerformed(evt);
             }
         });
 
@@ -180,12 +181,12 @@ public class VistaGestionVehiculos extends javax.swing.JFrame {
                             .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTelefono2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtAño, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtColor, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(518, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -214,27 +215,27 @@ public class VistaGestionVehiculos extends javax.swing.JFrame {
                 .addGap(125, 125, 125)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(txtNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12)
-                    .addComponent(txtTelefono2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel13)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 204, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -291,30 +292,131 @@ public class VistaGestionVehiculos extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnReversaActionPerformed
 
-    private void txtTelefono2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefono2ActionPerformed
+    private void txtMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMarcaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtTelefono2ActionPerformed
+    }//GEN-LAST:event_txtMarcaActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        // TODO add your handling code here:
+        if (!txtAño.getText().isEmpty() || !txtColor.getText().isEmpty() || !txtMarca.getText().isEmpty() || !txtModelo.getText().isEmpty() || !txtPlaca.getText().isEmpty() || !txtPrecio.getText().isEmpty()) {
+            String placa = txtPlaca.getText();
+            String anio = txtAño.getText();
+            String color = txtColor.getText();
+            String marca = txtMarca.getText();
+            String modelo = txtModelo.getText();
+            float precio = Float.parseFloat(txtPrecio.getText());
+            try {
+                boolean respuesta = vehiculoService.createVehiculo(placa, marca, modelo, anio, color, precio);
+                if (respuesta) {
+                    JOptionPane.showMessageDialog(null, "Se guardo con exito");
+                    llenarTabla();
+                    limpiarCampos();
+                } else {
+                    JOptionPane.showMessageDialog(null, "invalidos");
+                }
+            } catch (RuntimeException ex) {
+                System.out.println(ex.getMessage());
+
+                ex.getMessage();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+
+            } catch (InvalidVehiculoDataException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
-    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
+    private void txtColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtColorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtPasswordActionPerformed
+    }//GEN-LAST:event_txtColorActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
+        if (!txtAño.getText().isEmpty() || !txtColor.getText().isEmpty() || !txtMarca.getText().isEmpty() || !txtModelo.getText().isEmpty() || !txtPlaca.getText().isEmpty() || !txtPrecio.getText().isEmpty()) {
+            String placa = txtPlaca.getText();
+            String anio = txtAño.getText();
+            String color = txtColor.getText();
+            String marca = txtMarca.getText();
+            String modelo = txtModelo.getText();
+            float precio = Float.parseFloat(txtPrecio.getText());
+            try {
+                boolean respuesta = vehiculoService.updateVehiculo(placa, marca, modelo, anio, color, precio);
+                if (respuesta) {
+                    JOptionPane.showMessageDialog(null, "Se edito con exito");
+                    llenarTabla();
+                    limpiarCampos();
+                } else {
+                    JOptionPane.showMessageDialog(null, "invalidos");
+                }
+            } catch (RuntimeException ex) {
+                System.out.println(ex.getMessage());
+
+                ex.getMessage();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+
+            } catch (InvalidVehiculoDataException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        if (!txtPlaca.getText().isEmpty()) {
+            String placa = txtPlaca.getText();
+            try {
+                boolean respuesta = vehiculoService.deleteVehiculo(placa);
+                if (respuesta) {
+                    JOptionPane.showMessageDialog(null, "Se elimino con exito");
+                    llenarTabla();
+                    limpiarCampos();
+                } else {
+                    JOptionPane.showMessageDialog(null, "invalidos");
+                }
+            } catch (RuntimeException ex) {
+                System.out.println(ex.getMessage());
+
+                ex.getMessage();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+
+            } catch (InvalidVehiculoDataException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+        if (!txtPlaca.getText().isEmpty()) {
+            String placa = txtPlaca.getText();
+            try {
+                Vehiculo vehiculo = vehiculoService.getVehiculoById(placa);
+                if (vehiculo != null) {
+                    txtAño.setText(vehiculo.getAnio());
+                    txtColor.setText(vehiculo.getColor());
+                    txtMarca.setText(vehiculo.getMarca());
+                    txtModelo.setText(vehiculo.getModelo());
+                    txtPrecio.setText(String.valueOf(vehiculo.getPrecio_venta()));
+                } else {
+                    JOptionPane.showMessageDialog(null, "invalidos");
+                }
+            } catch (RuntimeException ex) {
+                System.out.println(ex.getMessage());
+
+                ex.getMessage();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private void limpiarCampos(){
+        txtAño.setText(null);
+        txtColor.setText(null);
+        txtMarca.setText(null);
+        txtModelo.setText(null);
+        txtPlaca.setText(null);
+        txtPrecio.setText(null);
+    }
     /**
      * @param args the command line arguments
      */
@@ -366,11 +468,11 @@ public class VistaGestionVehiculos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable;
-    private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtCorreo;
-    private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtNombreUsuario;
-    private javax.swing.JTextField txtPassword;
-    private javax.swing.JTextField txtTelefono2;
+    private javax.swing.JTextField txtAño;
+    private javax.swing.JTextField txtColor;
+    private javax.swing.JTextField txtMarca;
+    private javax.swing.JTextField txtModelo;
+    private javax.swing.JTextField txtPlaca;
+    private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
 }

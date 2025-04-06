@@ -8,6 +8,7 @@ import exceptions.InvalidVehiculoDataException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import DTO.Vehiculo;
+import javax.swing.table.DefaultTableModel;
 import repositories.VehiculoRepository;
 import validators.VehiculoValidator;
 
@@ -23,7 +24,7 @@ public class VehiculoService {
         return vehiculoRepository.findById(placa);
     }
 
-    public void createVehiculo(String placa, String marca, String modelo, String anio, String color, float precio_venta) throws
+    public boolean createVehiculo(String placa, String marca, String modelo, String anio, String color, float precio_venta) throws
             SQLException, InvalidVehiculoDataException {
         if (!VehiculoValidator.validatePlaca(placa) || !VehiculoValidator.validateMarca(marca) || !VehiculoValidator.validateModelo(color) || !VehiculoValidator.validateAnio(anio) || !VehiculoValidator.validateColor(color) || !VehiculoValidator.validatePrecio(precio_venta)) {
             throw new InvalidVehiculoDataException("Datos inválidos");
@@ -32,6 +33,7 @@ public class VehiculoService {
         Vehiculo vehiculo = new Vehiculo(placa, marca, color, anio, color, precio_venta);
 
         vehiculoRepository.save(vehiculo);
+        return true;
     }
     
         public boolean updateVehiculo(String placa, String marca, String modelo, String anio, String color, float precio_venta) throws
@@ -63,5 +65,29 @@ public class VehiculoService {
     
      public ArrayList<Vehiculo> listarVehiculos() throws SQLException{
     return vehiculoRepository.listarVehiculos();
+    }
+     
+     public DefaultTableModel llenarTabla() throws SQLException {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.setColumnIdentifiers(new Object[]{"Placa", "Modelo", "Marca", "Año", "Color", "Precio Venta"});
+
+        try {
+            for (int i = 0; i < listarVehiculos().size(); i++) {
+                Vehiculo aux = listarVehiculos().get(i);
+                modelo.addRow(new Object[]{
+                    aux.getPlaca(),
+                    aux.getModelo(),
+                    aux.getMarca(),
+                    aux.getAnio(),
+                    aux.getColor(),
+                    aux.getPrecio_venta()
+                });
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al listar vehiculo: " + ex.getMessage());
+            throw ex; 
+        }
+
+        return modelo;
     }
 }
