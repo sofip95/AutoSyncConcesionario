@@ -69,6 +69,14 @@ public class UsuarioService {
         usuarioRepository.deleteUser(id);
         return true;
     }
+    
+    public ArrayList<Usuario> listarEmpleados() throws SQLException {
+        return usuarioRepository.listarEmpleados();
+    }
+
+    public ArrayList<Usuario> listarClientes() throws SQLException {
+        return usuarioRepository.listarClientes();
+    }
 
     public DefaultTableModel llenarTabla() throws SQLException {
         DefaultTableModel modelo = new DefaultTableModel();
@@ -92,13 +100,4 @@ public class UsuarioService {
 
         return modelo;
     }
-    
-    public ArrayList<Usuario> listarEmpleados() throws SQLException {
-        return usuarioRepository.listarEmpleados();
-    }
-
-    public ArrayList<Usuario> listarClientes() throws SQLException {
-        return usuarioRepository.listarClientes();
-    }
-
 }
