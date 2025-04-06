@@ -5,6 +5,10 @@
 package main.java.com.miempresa.miapp.vistas;
 
 import DTO.Usuario;
+import exceptions.InvalidUsuarioDataException;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import services.UsuarioService;
 
 /**
  *
@@ -13,14 +17,30 @@ import DTO.Usuario;
 public class VistaGestionEmpleados extends javax.swing.JFrame {
 
     Usuario usuario;
+    UsuarioService userService;
 
     /**
      * Creates new form VistaGestionEmpleados
      */
-    public VistaGestionEmpleados(Usuario usuario) {
+    public VistaGestionEmpleados(Usuario usuario) throws SQLException{
         initComponents();
         setLocationRelativeTo(this);
         this.usuario = usuario;
+        this.userService = userService == null ? new UsuarioService() : userService;
+        limpiarCampos();
+        llenarTabla();
+    }
+    
+    private void llenarTabla() throws SQLException {
+        try {
+            jTable.setModel(userService.llenarTabla());
+        } catch (SQLException ex) {
+            System.out.println("Error al llenar la tabla: " + ex.getMessage());
+            ex.printStackTrace(); 
+        } catch (RuntimeException ex) {
+            System.out.println("Error de ejecución: " + ex.getMessage());
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -41,14 +61,14 @@ public class VistaGestionEmpleados extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        txtNombreUsuario = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
-        txtTelefono = new javax.swing.JTextField();
-        txtPassword = new javax.swing.JTextField();
-        txtCodigo = new javax.swing.JTextField();
+        txtId = new javax.swing.JTextField();
+        txtEdad = new javax.swing.JTextField();
         txtCorreo = new javax.swing.JTextField();
+        txtExperiencia = new javax.swing.JTextField();
+        txtTelefono = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        txtCodigo1 = new javax.swing.JTextField();
+        txtContraseña = new javax.swing.JTextField();
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
@@ -58,25 +78,16 @@ public class VistaGestionEmpleados extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Gestion Empleados", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Dialog", 1, 32))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Gestion Empleados", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Dialog", 1, 32))); // NOI18N
 
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"2", "Sofia", "18", "3177778899", "sofia@gmail.com", "5 años en Google"},
-                {"7", "Andrea", "19", "3139992287", "andrea@gmail.com", "15 años en Facebook"}
+
             },
             new String [] {
-                "Id", "Nombre", "Edad", "Telefono", "Correo", "Experiencia"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         jScrollPane2.setViewportView(jTable);
 
         jLabel1.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
@@ -97,15 +108,15 @@ public class VistaGestionEmpleados extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         jLabel13.setText("Correo:");
 
-        txtTelefono.addActionListener(new java.awt.event.ActionListener() {
+        txtEdad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTelefonoActionPerformed(evt);
+                txtEdadActionPerformed(evt);
             }
         });
 
-        txtPassword.addActionListener(new java.awt.event.ActionListener() {
+        txtCorreo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPasswordActionPerformed(evt);
+                txtCorreoActionPerformed(evt);
             }
         });
 
@@ -183,13 +194,13 @@ public class VistaGestionEmpleados extends javax.swing.JFrame {
                                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(txtCodigo1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(txtExperiencia, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(26, 26, 26))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -218,31 +229,31 @@ public class VistaGestionEmpleados extends javax.swing.JFrame {
                 .addGap(76, 76, 76)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(txtNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel13)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtExperiencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
-                    .addComponent(txtCodigo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegistrar)
@@ -274,24 +285,94 @@ public class VistaGestionEmpleados extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
+    private void txtEdadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEdadActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtTelefonoActionPerformed
+    }//GEN-LAST:event_txtEdadActionPerformed
 
-    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
+    private void txtCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtPasswordActionPerformed
+    }//GEN-LAST:event_txtCorreoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
+        if (!txtContraseña.getText().isEmpty() || !txtCorreo.getText().isEmpty() || !txtEdad.getText().isEmpty() || !txtExperiencia.getText().isEmpty() || !txtId.getText().isEmpty() || !txtNombre.getText().isEmpty() || !txtTelefono.getText().isEmpty()) {
+            int id = Integer.parseInt(txtId.getText());
+            String contraseña = txtContraseña.getText();
+            String correo = txtCorreo.getText();
+            int edad = Integer.parseInt(txtEdad.getText());
+            String experiencia = txtExperiencia.getText();
+            String nombre = txtNombre.getText();
+            String telefono = txtTelefono.getText();
+            String rol = "Empleado";
+            try {
+                boolean respuesta = userService.updateUser(id, contraseña, nombre, edad, telefono, correo, experiencia, rol);
+                if (respuesta) {
+                    JOptionPane.showMessageDialog(null, "Se edito con exito");
+                    llenarTabla();
+                    limpiarCampos();
+                } else {
+                    JOptionPane.showMessageDialog(null, "invalidos");
+                }
+            } catch (RuntimeException ex) {
+                System.out.println(ex.getMessage());
+
+                ex.getMessage();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+
+            } catch (InvalidUsuarioDataException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        if (!txtId.getText().isEmpty()) {
+            int id = Integer.parseInt(txtId.getText());
+            try {
+                boolean respuesta = userService.deleteUser(id);
+                if (respuesta) {
+                    JOptionPane.showMessageDialog(null, "Se elimino con exito");
+                    llenarTabla();
+                    limpiarCampos();
+                } else {
+                    JOptionPane.showMessageDialog(null, "invalidos");
+                }
+            } catch (RuntimeException ex) {
+                System.out.println(ex.getMessage());
+
+                ex.getMessage();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+
+            } catch (InvalidUsuarioDataException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+        if (!txtId.getText().isEmpty()) {
+            int id = Integer.parseInt(txtId.getText());
+            try {
+                Usuario usuario = userService.getUsuarioById(id);
+                if (usuario != null) {
+                    txtContraseña.setText(usuario.getContrasenia());
+                    txtCorreo.setText(usuario.getCorreo());
+                    txtEdad.setText(String.valueOf(usuario.getEdad()));
+                    txtExperiencia.setText(usuario.getDescripcion());
+                    txtNombre.setText(usuario.getNombre());
+                    txtTelefono.setText(usuario.getTelefono());
+                } else {
+                    JOptionPane.showMessageDialog(null, "invalidos");
+                }
+            } catch (RuntimeException ex) {
+                System.out.println(ex.getMessage());
+
+                ex.getMessage();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnReversaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReversaActionPerformed
@@ -302,8 +383,46 @@ public class VistaGestionEmpleados extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReversaActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        // TODO add your handling code here:
+        if (!txtContraseña.getText().isEmpty() || !txtCorreo.getText().isEmpty() || !txtEdad.getText().isEmpty() || !txtExperiencia.getText().isEmpty() || !txtId.getText().isEmpty() || !txtNombre.getText().isEmpty() || !txtTelefono.getText().isEmpty()) {
+            int id = Integer.parseInt(txtId.getText());
+            String contraseña = txtContraseña.getText();
+            String correo = txtCorreo.getText();
+            int edad = Integer.parseInt(txtEdad.getText());
+            String experiencia = txtExperiencia.getText();
+            String nombre = txtNombre.getText();
+            String telefono = txtTelefono.getText();
+            String rol = "Empleado";
+            try {
+                boolean respuesta = userService.createUser(contraseña, nombre, edad, telefono, correo, experiencia, rol);
+                if (respuesta) {
+                    JOptionPane.showMessageDialog(null, "Se registro con exito");
+                    llenarTabla();
+                    limpiarCampos();
+                } else {
+                    JOptionPane.showMessageDialog(null, "invalidos");
+                }
+            } catch (RuntimeException ex) {
+                System.out.println(ex.getMessage());
+
+                ex.getMessage();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+
+            } catch (InvalidUsuarioDataException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void limpiarCampos() {
+        txtContraseña.setText(null);
+        txtCorreo.setText(null);
+        txtEdad.setText(null);
+        txtExperiencia.setText(null);
+        txtId.setText(null);
+        txtNombre.setText(null);
+        txtTelefono.setText(null);
+    }
 
     /**
      * @param args the command line arguments
@@ -357,12 +476,12 @@ public class VistaGestionEmpleados extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable;
-    private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtCodigo1;
+    private javax.swing.JTextField txtContraseña;
     private javax.swing.JTextField txtCorreo;
+    private javax.swing.JTextField txtEdad;
+    private javax.swing.JTextField txtExperiencia;
+    private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtNombreUsuario;
-    private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }

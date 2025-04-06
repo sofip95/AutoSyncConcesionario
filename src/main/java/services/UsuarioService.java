@@ -8,6 +8,7 @@ import exceptions.InvalidUsuarioDataException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import DTO.Usuario;
+import javax.swing.table.DefaultTableModel;
 import repositories.UsuarioRepository;
 import validators.UsuarioValidator;
 
@@ -69,6 +70,29 @@ public class UsuarioService {
         return true;
     }
 
+    public DefaultTableModel llenarTabla() throws SQLException {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.setColumnIdentifiers(new Object[]{"Id", "Nombre", "Edad", "Correo", "Descripcion"});
+
+        try {
+            for (int i = 0; i < listarEmpleados().size(); i++) {
+                Usuario aux = listarEmpleados().get(i);
+                modelo.addRow(new Object[]{
+                    aux.getId_usuario(),
+                    aux.getNombre(),
+                    aux.getEdad(),
+                    aux.getCorreo(),
+                    aux.getDescripcion()
+                });
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al listar empleados: " + ex.getMessage());
+            throw ex; 
+        }
+
+        return modelo;
+    }
+    
     public ArrayList<Usuario> listarEmpleados() throws SQLException {
         return usuarioRepository.listarEmpleados();
     }
