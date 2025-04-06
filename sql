@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `vehiculo` (
   `placa` varchar(10) NOT NULL,
   `marca` varchar(250) NOT NULL,
   `modelo` varchar(250) DEFAULT NULL,
-  `anio` year(4) DEFAULT NULL,
+  `anio` varchar(4) DEFAULT NULL,
   `color` varchar(250) DEFAULT NULL,
   `precio_venta` float unsigned NOT NULL,
   PRIMARY KEY (`placa`)
