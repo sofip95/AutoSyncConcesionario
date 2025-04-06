@@ -8,6 +8,7 @@ import DTO.PruebaManejo;
 import DTO.Usuario;
 import exceptions.InvalidPruebaDataException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,15 +28,29 @@ public class PruebaManejoService {
         return pruebaRepository.findById(id);
     }
 
-    public void createPrueba(String fecha, String vehiculo, int cliente, int empleado) throws
+    public boolean createPrueba(LocalDate fecha, String vehiculo, int cliente, int empleado) throws
             SQLException, InvalidPruebaDataException {
-        if (!PruebaValidator.validateFecha(fecha) || !PruebaValidator.validateVehiculo(vehiculo)) {
+        if ( !PruebaValidator.validateVehiculo(vehiculo)) {
             throw new InvalidPruebaDataException("Datos inválidos");
+        }
+        
+              // Validar límite de 3 pruebas por empleado por día
+        ArrayList<PruebaManejo> pruebasEmpleado = pruebaRepository.listarPruebasEmpleado(empleado);
+        int pruebasDelDia = 0;
+        
+        for (PruebaManejo prueba : pruebasEmpleado) {
+            if (prueba.getFecha_prueba().equals(fecha)) {
+                pruebasDelDia++;
+                if (pruebasDelDia >= 3) {
+                    throw new InvalidPruebaDataException("limite de pruebas agendadas por dia del empleado alcanzada");
+                }
+            }
         }
 
         PruebaManejo prueba = new PruebaManejo(0, fecha, vehiculo, cliente, empleado);
 
         pruebaRepository.save(prueba);
+        return true;
     }
 
     public boolean deletePrueba(int id) throws SQLException, InvalidPruebaDataException {
@@ -78,4 +93,19 @@ public class PruebaManejoService {
 
     return modelo;
 }
+       public ArrayList<Usuario> listarEmpleadosDisponibles() throws SQLException {
+        UsuarioService usuarioService = new UsuarioService();
+        ArrayList<Usuario> empleadosDisponibles = new ArrayList<>();
+        ArrayList<Usuario> todosEmpleados = usuarioService.listarEmpleados();
+        
+        for (Usuario empleado : todosEmpleados) {
+            int numPruebas = listarPruebasEmpleado(empleado.getId_usuario()).size();
+            if (numPruebas < 3) {
+                empleadosDisponibles.add(empleado);
+            }
+        }
+        
+        return empleadosDisponibles;
+    }
+   
 }

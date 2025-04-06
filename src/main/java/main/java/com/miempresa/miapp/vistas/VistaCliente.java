@@ -5,6 +5,9 @@
 package main.java.com.miempresa.miapp.vistas;
 
 import DTO.Usuario;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -175,10 +178,14 @@ public class VistaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnChatActionPerformed
 
     private void btnPruebaMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPruebaMActionPerformed
-        // TODO add your handling code here:
-        VistaSolicitarPrueba vc = new VistaSolicitarPrueba(usuario);
-        vc.setVisible(true);
-        this.dispose();
+        try {
+            // TODO add your handling code here:
+            VistaSolicitarPrueba vc = new VistaSolicitarPrueba(usuario);
+            vc.setVisible(true);
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(VistaCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnPruebaMActionPerformed
 
     private void btnVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVehiculoActionPerformed

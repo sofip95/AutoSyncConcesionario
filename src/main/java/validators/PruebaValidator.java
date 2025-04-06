@@ -10,10 +10,6 @@ package validators;
  */
 public class PruebaValidator {
     
-    public static boolean validateFecha(String fecha) {
-        return fecha != null && !fecha.trim().isEmpty();
-    }
-
     public static boolean validateVehiculo(String vehiculo) {
         return vehiculo != null && !vehiculo.trim().isEmpty();
     }

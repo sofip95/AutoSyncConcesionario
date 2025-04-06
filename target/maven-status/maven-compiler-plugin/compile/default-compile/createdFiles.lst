@@ -1,9 +1,7 @@
 main\java\com\miempresa\miapp\vistas\VistaCliente$5.class
 main\java\com\miempresa\miapp\vistas\VistaMiInfo$3.class
 main\java\com\miempresa\miapp\vistas\VistaGestionClientes$3.class
-main\java\com\miempresa\miapp\vistas\VistaSolicitarPrueba$3.class
 main\java\com\miempresa\miapp\vistas\VistaCliente.class
-repositories\UsuarioRepository.class
 main\java\com\miempresa\miapp\vistas\VistaComprarVehiculo.class
 services\PruebaManejoService.class
 main\java\com\miempresa\miapp\vistas\VistaCliente$2.class
@@ -24,6 +22,7 @@ main\java\com\miempresa\miapp\vistas\VistaGestionClientes$6.class
 main\java\com\miempresa\miapp\vistas\VistaGestionEmpleados$8.class
 main\java\com\miempresa\miapp\vistas\VistaGestionVehiculos$2.class
 services\UsuarioService.class
+repositories\VehiculoRepository.class
 main\java\com\miempresa\miapp\vistas\VistaAdminGeneral$2.class
 main\java\com\miempresa\miapp\vistas\VistaGestionClientes$9.class
 main\java\com\miempresa\miapp\vistas\VistaGestionEmpleados$5.class
@@ -52,6 +51,7 @@ main\java\com\miempresa\miapp\vistas\VistaPruebasAgendadas$1.class
 main\java\com\miempresa\miapp\vistas\VistaAdminGeneral$1.class
 DTO\Venta.class
 exceptions\InvalidUsuarioDataException.class
+services\VehiculoService.class
 main\java\com\miempresa\miapp\vistas\VistaRegistrarse$5.class
 main\java\com\miempresa\miapp\vistas\VistaLogin$2.class
 main\java\com\miempresa\miapp\vistas\VistaCliente$3.class
