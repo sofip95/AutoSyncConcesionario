@@ -5,6 +5,9 @@
 package main.java.com.miempresa.miapp.vistas;
 
 import DTO.Usuario;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -153,9 +156,13 @@ public class VistaEmpleado extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGestionClientesActionPerformed
 
     private void btnPruebasAgendadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPruebasAgendadasActionPerformed
-       VistaPruebasAgendadas vp = new VistaPruebasAgendadas(usuario);
-       vp.setVisible(true);
-       this.dispose();
+        try {
+            VistaPruebasAgendadas vp = new VistaPruebasAgendadas(usuario);
+            vp.setVisible(true);
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(VistaEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnPruebasAgendadasActionPerformed
 
     /**

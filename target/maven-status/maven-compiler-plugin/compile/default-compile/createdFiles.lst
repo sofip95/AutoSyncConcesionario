@@ -15,7 +15,6 @@ DTO\PruebaManejo.class
 main\java\com\miempresa\miapp\vistas\VistaLogin.class
 main\java\com\miempresa\miapp\vistas\VistaAceptarPruebas$3.class
 main\java\com\miempresa\miapp\vistas\VistaRegistrarse$4.class
-main\java\com\miempresa\miapp\vistas\VistaPruebasAgendadas$3.class
 main\java\com\miempresa\miapp\vistas\VistaGestionVehiculos$5.class
 main\java\com\miempresa\miapp\vistas\VistaChatBot$2.class
 main\java\com\miempresa\miapp\vistas\VistaHistorial$1.class

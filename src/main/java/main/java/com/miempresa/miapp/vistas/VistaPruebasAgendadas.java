@@ -5,20 +5,27 @@
 package main.java.com.miempresa.miapp.vistas;
 
 import DTO.Usuario;
+import java.sql.SQLException;
+import services.PruebaManejoService;
 
 /**
  *
  * @author Victus
  */
 public class VistaPruebasAgendadas extends javax.swing.JFrame {
+
     Usuario usuario;
+    PruebaManejoService prueba;
+
     /**
      * Creates new form VistaPruebasAgendadas
      */
-    public VistaPruebasAgendadas(Usuario usuario) {
+    public VistaPruebasAgendadas(Usuario usuario) throws SQLException {
         initComponents();
         setLocationRelativeTo(this);
         this.usuario = usuario;
+        prueba = new PruebaManejoService();
+        llenarTabla();
     }
 
     /**
@@ -53,27 +60,12 @@ public class VistaPruebasAgendadas extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"2025/07/15", "KDV331 - Volkswagen"}
+
             },
             new String [] {
-                "Fecha", "Vehiculo"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -126,6 +118,17 @@ public class VistaPruebasAgendadas extends javax.swing.JFrame {
         vc.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnReversaActionPerformed
+    private void llenarTabla() {
+        try {
+            jTable1.setModel(prueba.llenarTabla(usuario.getId_usuario()));
+        } catch (SQLException ex) {
+            System.out.println("Error al llenar la tabla: " + ex.getMessage());
+            ex.printStackTrace(); // Imprimir la traza de la excepción para más detalles
+        } catch (RuntimeException ex) {
+            System.out.println("Error de ejecución: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
 
     /**
      * @param args the command line arguments
