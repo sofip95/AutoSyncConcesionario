@@ -2,20 +2,6 @@
 CREATE DATABASE IF NOT EXISTS `proyecto` ;
 USE `proyecto`;
 
-CREATE TABLE IF NOT EXISTS `prueba_manejo` (
-  `id_prueba` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `fecha_prueba` date DEFAULT NULL,
-  `id_vehiculo` varchar(10) NOT NULL,
-  `id_cliente` int(11) unsigned NOT NULL,
-  `id_empleado` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`id_prueba`),
-  KEY `fk_id_cliente_1` (`id_cliente`),
-  KEY `fk_id_empleado_1` (`id_empleado`),
-  KEY `fk_placa_1` (`id_vehiculo`),
-  CONSTRAINT `fk_id_cliente_1` FOREIGN KEY (`id_cliente`) REFERENCES `usuario` (`id_usuario`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  CONSTRAINT `fk_id_empleado_1` FOREIGN KEY (`id_empleado`) REFERENCES `usuario` (`id_usuario`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  CONSTRAINT `fk_placa_1` FOREIGN KEY (`id_vehiculo`) REFERENCES `vehiculo` (`placa`) ON UPDATE CASCADE ON DELETE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 CREATE TABLE IF NOT EXISTS `usuario` (
   `id_usuario` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -52,3 +38,17 @@ CREATE TABLE IF NOT EXISTS `venta` (
   CONSTRAINT `fk_placa_2` FOREIGN KEY (`id_vehiculo`) REFERENCES `vehiculo` (`placa`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
+CREATE TABLE IF NOT EXISTS `prueba_manejo` (
+  `id_prueba` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `fecha_prueba` date DEFAULT NULL,
+  `id_vehiculo` varchar(10) NOT NULL,
+  `id_cliente` int(11) unsigned NOT NULL,
+  `id_empleado` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id_prueba`),
+  KEY `fk_id_cliente_1` (`id_cliente`),
+  KEY `fk_id_empleado_1` (`id_empleado`),
+  KEY `fk_placa_1` (`id_vehiculo`),
+  CONSTRAINT `fk_id_cliente_1` FOREIGN KEY (`id_cliente`) REFERENCES `usuario` (`id_usuario`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  CONSTRAINT `fk_id_empleado_1` FOREIGN KEY (`id_empleado`) REFERENCES `usuario` (`id_usuario`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  CONSTRAINT `fk_placa_1` FOREIGN KEY (`id_vehiculo`) REFERENCES `vehiculo` (`placa`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
