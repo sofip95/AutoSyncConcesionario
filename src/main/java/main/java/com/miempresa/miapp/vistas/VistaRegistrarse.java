@@ -4,18 +4,29 @@
  */
 package main.java.com.miempresa.miapp.vistas;
 
+import DTO.Usuario;
+import exceptions.InvalidUsuarioDataException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import services.UsuarioService;
+
 /**
  *
  * @author Victus
  */
 public class VistaRegistrarse extends javax.swing.JFrame {
 
-    /**
+    UsuarioService userService;
+
+    /*
      * Creates new form VistaRegistrarse
      */
     public VistaRegistrarse() {
         initComponents();
         setLocationRelativeTo(this);
+        this.userService = userService == null ? new UsuarioService() : userService;
     }
 
     /**
@@ -31,7 +42,6 @@ public class VistaRegistrarse extends javax.swing.JFrame {
         btnReversa = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         btnRgeistrarse = new javax.swing.JButton();
-        txtId = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtEdad = new javax.swing.JTextField();
@@ -41,7 +51,6 @@ public class VistaRegistrarse extends javax.swing.JFrame {
         txtCorreo = new javax.swing.JTextField();
         txtIntereses = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -95,9 +104,6 @@ public class VistaRegistrarse extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         jLabel13.setText("Correo:");
 
-        jLabel1.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        jLabel1.setText("Id:");
-
         jLabel3.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         jLabel3.setText("Nombre:");
 
@@ -111,12 +117,6 @@ public class VistaRegistrarse extends javax.swing.JFrame {
                         .addGap(88, 88, 88)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -125,16 +125,18 @@ public class VistaRegistrarse extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtIntereses, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGap(188, 188, 188)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -149,11 +151,7 @@ public class VistaRegistrarse extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
+                .addGap(87, 87, 87)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -179,7 +177,7 @@ public class VistaRegistrarse extends javax.swing.JFrame {
                     .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addComponent(btnRgeistrarse)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -200,7 +198,7 @@ public class VistaRegistrarse extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(btnReversa, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(35, 35, 35)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(30, Short.MAX_VALUE))
         );
@@ -234,7 +232,33 @@ public class VistaRegistrarse extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCorreoActionPerformed
 
     private void btnRgeistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRgeistrarseActionPerformed
-        // TODO add your handling code here:
+        if (!txtContrasena.getText().isEmpty() || !txtCorreo.getText().isEmpty() || !txtEdad.getText().isEmpty() || !txtIntereses.getText().isEmpty() || !txtNombre.getText().isEmpty() || !txtTelefono.getText().isEmpty()) {
+            String contraseña = txtContrasena.getText();
+            String nombre = txtNombre.getText();
+            int edad = Integer.parseInt(txtEdad.getText());
+            String telefono = txtTelefono.getText();
+            String correo = txtCorreo.getText();
+            String intereses = txtIntereses.getText();
+            String rol = "Cliente";
+            try {
+                boolean respuesta = userService.createUser(contraseña, nombre, edad, telefono, correo, intereses, rol);
+                if (respuesta) {
+                    JOptionPane.showMessageDialog(null, "Se registro con exito");
+                } else {
+                    JOptionPane.showMessageDialog(null, "invalidos");
+                }
+            } catch (RuntimeException ex) {
+                System.out.println(ex.getMessage());
+
+                ex.getMessage();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+
+            } catch (InvalidUsuarioDataException ex) {
+                System.out.println(ex.getMessage());            
+            }
+
+        }
     }//GEN-LAST:event_btnRgeistrarseActionPerformed
 
     /**
@@ -275,7 +299,6 @@ public class VistaRegistrarse extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnReversa;
     private javax.swing.JButton btnRgeistrarse;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel3;
@@ -287,7 +310,6 @@ public class VistaRegistrarse extends javax.swing.JFrame {
     private javax.swing.JTextField txtContrasena;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtEdad;
-    private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtIntereses;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTelefono;
