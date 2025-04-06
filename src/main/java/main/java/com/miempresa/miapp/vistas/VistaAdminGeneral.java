@@ -5,6 +5,9 @@
 package main.java.com.miempresa.miapp.vistas;
 
 import DTO.Usuario;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -118,9 +121,14 @@ public class VistaAdminGeneral extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReversaActionPerformed
 
     private void btnEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpleadosActionPerformed
-        VistaGestionEmpleados vc = new VistaGestionEmpleados(usuario);
-        vc.setVisible(true);
-        this.dispose();
+        try {
+            VistaGestionEmpleados vc = new VistaGestionEmpleados(usuario);
+            
+            vc.setVisible(true);
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(VistaAdminGeneral.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnEmpleadosActionPerformed
 
     private void btnVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVehiculosActionPerformed

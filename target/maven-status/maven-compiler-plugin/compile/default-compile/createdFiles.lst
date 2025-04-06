@@ -99,7 +99,6 @@ main\java\com\miempresa\miapp\vistas\VistaAdminGeneral$3.class
 main\java\com\miempresa\miapp\vistas\VistaRegistrarse$1.class
 exceptions\InvalidPruebaDataException.class
 main\java\com\miempresa\miapp\vistas\VistaCliente$6.class
-main\java\com\miempresa\miapp\vistas\VistaGestionEmpleados$9.class
 main\java\com\miempresa\miapp\vistas\VistaGestionVehiculos$3.class
 main\java\com\miempresa\miapp\vistas\VistaGestionClientes$7.class
 exceptions\InvalidVentaDataException.class
