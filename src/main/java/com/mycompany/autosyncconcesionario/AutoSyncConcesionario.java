@@ -20,7 +20,6 @@ public class AutoSyncConcesionario {
         UsuarioService usuarioService = new UsuarioService();
         try{
             usuarioService.createUser("1", "juano", 19, "!", "@", "q", "Admin");
-            usuarioService.createUser("2", "juano", 19, "!", "@", "q", "Empleado");
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {

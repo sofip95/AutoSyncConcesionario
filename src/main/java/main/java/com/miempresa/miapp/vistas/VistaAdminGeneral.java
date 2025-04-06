@@ -132,9 +132,13 @@ public class VistaAdminGeneral extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEmpleadosActionPerformed
 
     private void btnVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVehiculosActionPerformed
-        VistaGestionVehiculos vc = new VistaGestionVehiculos(usuario);
-        vc.setVisible(true);
-        this.dispose();
+        try {
+            VistaGestionVehiculos vc = new VistaGestionVehiculos(usuario);
+            vc.setVisible(true);
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(VistaAdminGeneral.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnVehiculosActionPerformed
 
     /**
