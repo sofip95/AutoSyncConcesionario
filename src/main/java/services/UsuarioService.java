@@ -27,13 +27,14 @@ public class UsuarioService {
         return usuarioRepository.login(id, password);
     }
 
-    public void createUser(String contrasenia, String nombre, int edad, String telefono, String correo, String descripcion, String rol) throws
+    public boolean createUser(String contrasenia, String nombre, int edad, String telefono, String correo, String descripcion, String rol) throws
             SQLException, InvalidUsuarioDataException {
         if (!UsuarioValidator.validateContrasenia(contrasenia) || !UsuarioValidator.validateName(nombre) || !UsuarioValidator.validateEdad(edad) || !UsuarioValidator.validateTelefono(telefono) || !UsuarioValidator.validateEmail(correo) || !UsuarioValidator.validateDescripcion(descripcion) || !UsuarioValidator.validateRol(rol)) {
             throw new InvalidUsuarioDataException("Datos inválidos");
         }
         Usuario usuario = new Usuario(0, contrasenia, nombre, edad, telefono, correo, descripcion, rol);
         usuarioRepository.save(usuario);
+        return true;
     }
 
     public boolean updateUser(int id, String contrasenia, String nombre, int edad, String telefono, String correo, String descripcion, String rol) throws SQLException, InvalidUsuarioDataException {
