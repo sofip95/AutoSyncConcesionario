@@ -153,9 +153,13 @@ public class VistaEmpleado extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAceptarPruebasActionPerformed
 
     private void btnGestionClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionClientesActionPerformed
-       VistaGestionClientes vc = new VistaGestionClientes(usuario);
-       vc.setVisible(true);
-       this.dispose();
+        try {
+            VistaGestionClientes vc = new VistaGestionClientes(usuario);
+            vc.setVisible(true);
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(VistaEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+        }
        
     }//GEN-LAST:event_btnGestionClientesActionPerformed
 
