@@ -27,6 +27,7 @@ public class VistaRegistrarse extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(this);
         this.userService = userService == null ? new UsuarioService() : userService;
+        limpiarCampos();
     }
 
     /**
@@ -244,6 +245,7 @@ public class VistaRegistrarse extends javax.swing.JFrame {
                 boolean respuesta = userService.createUser(contraseña, nombre, edad, telefono, correo, intereses, rol);
                 if (respuesta) {
                     JOptionPane.showMessageDialog(null, "Se registro con exito");
+                    limpiarCampos();
                 } else {
                     JOptionPane.showMessageDialog(null, "invalidos");
                 }
@@ -261,6 +263,14 @@ public class VistaRegistrarse extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnRgeistrarseActionPerformed
 
+    private  void limpiarCampos(){
+        txtContrasena.setText(null);
+        txtCorreo.setText(null);
+        txtEdad.setText(null);
+        txtIntereses.setText(null);
+        txtNombre.setText(null);
+        txtTelefono.setText(null);
+    }
     /**
      * @param args the command line arguments
      */
