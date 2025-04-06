@@ -4,18 +4,21 @@
  */
 package main.java.com.miempresa.miapp.vistas;
 
+import DTO.Usuario;
+
 /**
  *
  * @author JUAN
  */
 public class VistaMiInfo extends javax.swing.JFrame {
-
+    Usuario usuario;
     /**
      * Creates new form VistaMiInfo
      */
-    public VistaMiInfo() {
+    public VistaMiInfo(Usuario usuario) {
         initComponents();
         setLocationRelativeTo(this);
+        this.usuario = usuario;
     }
 
     /**
@@ -215,7 +218,7 @@ public class VistaMiInfo extends javax.swing.JFrame {
 
     private void btnReversaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReversaActionPerformed
         // TODO add your handling code here:
-        VistaCliente ve = new VistaCliente();
+        VistaCliente ve = new VistaCliente(usuario);
         ve.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnReversaActionPerformed
@@ -262,7 +265,7 @@ public class VistaMiInfo extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaMiInfo().setVisible(true);
+                new VistaLogin(null).setVisible(true);
             }
         });
     }

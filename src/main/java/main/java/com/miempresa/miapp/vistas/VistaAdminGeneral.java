@@ -4,18 +4,21 @@
  */
 package main.java.com.miempresa.miapp.vistas;
 
+import DTO.Usuario;
+
 /**
  *
  * @author sofia
  */
 public class VistaAdminGeneral extends javax.swing.JFrame {
-
+    Usuario usuario;
     /**
      * Creates new form VistaAdminGeneral
      */
-    public VistaAdminGeneral() {
+    public VistaAdminGeneral(Usuario usuario) {
         initComponents();
         setLocationRelativeTo(this);
+        this.usuario = usuario;
     }
 
     /**
@@ -115,13 +118,13 @@ public class VistaAdminGeneral extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReversaActionPerformed
 
     private void btnEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpleadosActionPerformed
-        VistaGestionEmpleados vc = new VistaGestionEmpleados();
+        VistaGestionEmpleados vc = new VistaGestionEmpleados(usuario);
         vc.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnEmpleadosActionPerformed
 
     private void btnVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVehiculosActionPerformed
-        VistaGestionVehiculos vc = new VistaGestionVehiculos();
+        VistaGestionVehiculos vc = new VistaGestionVehiculos(usuario);
         vc.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVehiculosActionPerformed

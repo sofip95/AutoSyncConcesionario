@@ -4,18 +4,21 @@
  */
 package main.java.com.miempresa.miapp.vistas;
 
+import DTO.Usuario;
+
 /**
  *
  * @author Victus
  */
 public class VistaEmpleado extends javax.swing.JFrame {
-
+    Usuario usuario;
     /**
      * Creates new form VistaEmpleado
      */
-    public VistaEmpleado() {
+    public VistaEmpleado(Usuario usuario) {
         initComponents();
         setLocationRelativeTo(this);
+        this.usuario = usuario;
     }
 
     /**
@@ -131,26 +134,26 @@ public class VistaEmpleado extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReversaActionPerformed
 
     private void btnGestionVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionVehiculoActionPerformed
-        VistaGestionVehiculos vc = new VistaGestionVehiculos();
+        VistaGestionVehiculos vc = new VistaGestionVehiculos(usuario);
         vc.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnGestionVehiculoActionPerformed
 
     private void btnAceptarPruebasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarPruebasActionPerformed
-        VistaAceptarPruebas vp = new VistaAceptarPruebas();
+        VistaAceptarPruebas vp = new VistaAceptarPruebas(usuario);
         vp.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAceptarPruebasActionPerformed
 
     private void btnGestionClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionClientesActionPerformed
-       VistaGestionClientes vc = new VistaGestionClientes();
+       VistaGestionClientes vc = new VistaGestionClientes(usuario);
        vc.setVisible(true);
        this.dispose();
        
     }//GEN-LAST:event_btnGestionClientesActionPerformed
 
     private void btnPruebasAgendadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPruebasAgendadasActionPerformed
-       VistaPruebasAgendadas vp = new VistaPruebasAgendadas();
+       VistaPruebasAgendadas vp = new VistaPruebasAgendadas(usuario);
        vp.setVisible(true);
        this.dispose();
     }//GEN-LAST:event_btnPruebasAgendadasActionPerformed

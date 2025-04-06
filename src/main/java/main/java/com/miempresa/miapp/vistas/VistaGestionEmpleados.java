@@ -4,18 +4,23 @@
  */
 package main.java.com.miempresa.miapp.vistas;
 
+import DTO.Usuario;
+
 /**
  *
  * @author sofia
  */
 public class VistaGestionEmpleados extends javax.swing.JFrame {
 
+    Usuario usuario;
+
     /**
      * Creates new form VistaGestionEmpleados
      */
-    public VistaGestionEmpleados() {
+    public VistaGestionEmpleados(Usuario usuario) {
         initComponents();
         setLocationRelativeTo(this);
+        this.usuario = usuario;
     }
 
     /**
@@ -291,7 +296,7 @@ public class VistaGestionEmpleados extends javax.swing.JFrame {
 
     private void btnReversaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReversaActionPerformed
         // TODO add your handling code here:
-        VistaAdminGeneral vc = new VistaAdminGeneral();
+        VistaAdminGeneral vc = new VistaAdminGeneral(usuario);
         vc.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnReversaActionPerformed
