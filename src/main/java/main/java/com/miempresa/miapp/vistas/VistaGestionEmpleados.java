@@ -383,8 +383,7 @@ public class VistaGestionEmpleados extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReversaActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        if (!txtContraseña.getText().isEmpty() || !txtCorreo.getText().isEmpty() || !txtEdad.getText().isEmpty() || !txtExperiencia.getText().isEmpty() || !txtId.getText().isEmpty() || !txtNombre.getText().isEmpty() || !txtTelefono.getText().isEmpty()) {
-            int id = Integer.parseInt(txtId.getText());
+        if (!txtContraseña.getText().isEmpty() || !txtCorreo.getText().isEmpty() || !txtEdad.getText().isEmpty() || !txtExperiencia.getText().isEmpty() || !txtNombre.getText().isEmpty() || !txtTelefono.getText().isEmpty()) {
             String contraseña = txtContraseña.getText();
             String correo = txtCorreo.getText();
             int edad = Integer.parseInt(txtEdad.getText());
