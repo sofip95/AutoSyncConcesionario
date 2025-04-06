@@ -5,6 +5,10 @@
 package main.java.com.miempresa.miapp.vistas;
 
 import DTO.Usuario;
+import exceptions.InvalidUsuarioDataException;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import services.UsuarioService;
 
 /**
  *
@@ -12,14 +16,31 @@ import DTO.Usuario;
  */
 public class VistaGestionClientes extends javax.swing.JFrame {
     Usuario usuario;
+    UsuarioService userService;
     /**
      * Creates new form VistaGestionClientes
      */
-    public VistaGestionClientes(Usuario usuario) {
+    public VistaGestionClientes(Usuario usuario) throws SQLException {
         initComponents();
         setLocationRelativeTo(this);
         this.usuario = usuario;
+        this.userService = userService == null ? new UsuarioService() : userService;
+        limpiarCampos();
+        llenarTablaCliente();
     }
+    
+    private void llenarTablaCliente() throws SQLException {
+        try {
+            jTable.setModel(userService.llenarTablaCliente());
+        } catch (SQLException ex) {
+            System.out.println("Error al llenar la tabla: " + ex.getMessage());
+            ex.printStackTrace(); 
+        } catch (RuntimeException ex) {
+            System.out.println("Error de ejecución: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -91,22 +112,12 @@ public class VistaGestionClientes extends javax.swing.JFrame {
 
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"3", "Juan", "18", "3138796677", "juan@gmail.com", "Desarrollo web"},
-                {"5", "Miguel", "20", "3126665544", "miguel@gmail.com", "Backend"},
-                {"6", "Santiago", "21", "3158886677", "santiago@gmail.com", "Videojuegos"}
+
             },
             new String [] {
-                "Id", "Nombre", "Edad", "Telefono", "Correo", "Intereses"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         jScrollPane2.setViewportView(jTable);
 
         txtCorreo.addActionListener(new java.awt.event.ActionListener() {
@@ -296,7 +307,34 @@ public class VistaGestionClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEdadActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        // TODO add your handling code here:
+       if (!txtContraseña.getText().isEmpty() || !txtCorreo.getText().isEmpty() || !txtEdad.getText().isEmpty() || !txtIntereses.getText().isEmpty() || !txtNombre.getText().isEmpty() || !txtTelefono.getText().isEmpty()) {
+            String contraseña = txtContraseña.getText();
+            String correo = txtCorreo.getText();
+            int edad = Integer.parseInt(txtEdad.getText());
+            String intereses = txtIntereses.getText();
+            String nombre = txtNombre.getText();
+            String telefono = txtTelefono.getText();
+            String rol = "Cliente";
+            try {
+                boolean respuesta = userService.createUser(contraseña, nombre, edad, telefono, correo, intereses, rol);
+                if (respuesta) {
+                    JOptionPane.showMessageDialog(null, "Se registro con exito");
+                    llenarTablaCliente();
+                    limpiarCampos();
+                } else {
+                    JOptionPane.showMessageDialog(null, "invalidos");
+                }
+            } catch (RuntimeException ex) {
+                System.out.println(ex.getMessage());
+
+                ex.getMessage();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+
+            } catch (InvalidUsuarioDataException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void txtCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoActionPerformed
@@ -304,15 +342,85 @@ public class VistaGestionClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCorreoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
+        if (!txtContraseña.getText().isEmpty() || !txtCorreo.getText().isEmpty() || !txtEdad.getText().isEmpty() || !txtIntereses.getText().isEmpty() || !txtId.getText().isEmpty() || !txtNombre.getText().isEmpty() || !txtTelefono.getText().isEmpty()) {
+            int id = Integer.parseInt(txtId.getText());
+            String contraseña = txtContraseña.getText();
+            String correo = txtCorreo.getText();
+            int edad = Integer.parseInt(txtEdad.getText());
+            String descripcion = txtIntereses.getText();
+            String nombre = txtNombre.getText();
+            String telefono = txtTelefono.getText();
+            String rol = "Cliente";
+            try {
+                boolean respuesta = userService.updateUser(id, contraseña, nombre, edad, telefono, correo, descripcion, rol);
+                if (respuesta) {
+                    JOptionPane.showMessageDialog(null, "Se edito con exito");
+                    llenarTablaCliente();
+                    limpiarCampos();
+                } else {
+                    JOptionPane.showMessageDialog(null, "invalidos");
+                }
+            } catch (RuntimeException ex) {
+                System.out.println(ex.getMessage());
+
+                ex.getMessage();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+
+            } catch (InvalidUsuarioDataException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        if (!txtId.getText().isEmpty()) {
+            int id = Integer.parseInt(txtId.getText());
+            try {
+                boolean respuesta = userService.deleteUser(id);
+                if (respuesta) {
+                    JOptionPane.showMessageDialog(null, "Se elimino con exito");
+                    llenarTablaCliente();
+                    limpiarCampos();
+                } else {
+                    JOptionPane.showMessageDialog(null, "invalidos");
+                }
+            } catch (RuntimeException ex) {
+                System.out.println(ex.getMessage());
+
+                ex.getMessage();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+
+            } catch (InvalidUsuarioDataException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+      if (!txtId.getText().isEmpty()) {
+            int id = Integer.parseInt(txtId.getText());
+            try {
+                Usuario usuario = userService.getUsuarioById(id);
+                if (usuario != null) {
+                    txtContraseña.setText(usuario.getContrasenia());
+                    txtCorreo.setText(usuario.getCorreo());
+                    txtEdad.setText(String.valueOf(usuario.getEdad()));
+                    txtIntereses.setText(usuario.getDescripcion());
+                    txtNombre.setText(usuario.getNombre());
+                    txtTelefono.setText(usuario.getTelefono());
+                } else {
+                    JOptionPane.showMessageDialog(null, "invalidos");
+                }
+            } catch (RuntimeException ex) {
+                System.out.println(ex.getMessage());
+
+                ex.getMessage();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
@@ -323,6 +431,15 @@ public class VistaGestionClientes extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTelefonoActionPerformed
 
+     private void limpiarCampos() {
+        txtContraseña.setText(null);
+        txtCorreo.setText(null);
+        txtEdad.setText(null);
+        txtIntereses.setText(null);
+        txtId.setText(null);
+        txtNombre.setText(null);
+        txtTelefono.setText(null);
+    }
     /**
      * @param args the command line arguments
      */

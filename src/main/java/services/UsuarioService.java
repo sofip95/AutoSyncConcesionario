@@ -100,4 +100,28 @@ public class UsuarioService {
 
         return modelo;
     }
+    
+    
+    public DefaultTableModel llenarTablaCliente() throws SQLException {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.setColumnIdentifiers(new Object[]{"Id", "Nombre", "Edad", "Correo", "Intereses"});
+
+        try {
+            for (int i = 0; i < listarClientes().size(); i++) {
+                Usuario aux = listarClientes().get(i);
+                modelo.addRow(new Object[]{
+                    aux.getId_usuario(),
+                    aux.getNombre(),
+                    aux.getEdad(),
+                    aux.getCorreo(),
+                    aux.getDescripcion()
+                });
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al listar cliente: " + ex.getMessage());
+            throw ex; 
+        }
+
+        return modelo;
+    }
 }
