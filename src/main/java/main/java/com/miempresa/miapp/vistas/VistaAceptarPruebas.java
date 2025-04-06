@@ -5,7 +5,14 @@
 package main.java.com.miempresa.miapp.vistas;
 
 import DTO.Usuario;
+import exceptions.InvalidPruebaDataException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import services.PruebaManejoService;
 
 /**
  *
@@ -13,6 +20,7 @@ import javax.swing.JOptionPane;
  */
 public class VistaAceptarPruebas extends javax.swing.JFrame {
     Usuario usuario ;
+    PruebaManejoService prueba;
     /**
      * Creates new form VistaAceptarPruebas
      */
@@ -20,6 +28,8 @@ public class VistaAceptarPruebas extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(this);
         this.usuario = usuario;
+        prueba = new PruebaManejoService();
+        llenarTabla();
     }
 
     /**
@@ -35,8 +45,8 @@ public class VistaAceptarPruebas extends javax.swing.JFrame {
         btnReversa = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
-        btnEditar = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        btnAceptar = new javax.swing.JButton();
+        txtPrueba = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -54,43 +64,25 @@ public class VistaAceptarPruebas extends javax.swing.JFrame {
 
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"3", "2025/07/15", "KVD331 - Volkswagen"},
-                {"5", "2025/05/20", "FGS889 - KIA"},
-                {"7", "2025/08/10", "TYF563 - Mazda"},
-                {"4", "2025/03/8", "YHW902 - Toyota"}
+
             },
             new String [] {
-                "Cliente", "Fecha", "Vehiculo"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         jScrollPane1.setViewportView(jTable);
 
-        btnEditar.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
-        btnEditar.setText("Aceptar Prueba");
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+        btnAceptar.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
+        btnAceptar.setText("Aceptar Prueba");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
+                btnAceptarActionPerformed(evt);
             }
         });
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtPrueba.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtPruebaActionPerformed(evt);
             }
         });
 
@@ -119,11 +111,11 @@ public class VistaAceptarPruebas extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jTextField1)
+                    .addComponent(txtPrueba)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18))
-                    .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE))
+                    .addComponent(btnAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE))
                 .addGap(224, 224, 224))
         );
         jPanel1Layout.setVerticalGroup(
@@ -139,9 +131,9 @@ public class VistaAceptarPruebas extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPrueba, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
         );
 
@@ -170,13 +162,60 @@ public class VistaAceptarPruebas extends javax.swing.JFrame {
            
     }//GEN-LAST:event_btnReversaActionPerformed
 
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditarActionPerformed
+    private void llenarTabla() {
+        try {
+            jTable.setModel(prueba.llenarTabla(usuario.getId_usuario()));
+                    jTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                // Verificar que la selección no sea un cambio de selección
+                if (!e.getValueIsAdjusting()) {
+                    int selectedRow = jTable.getSelectedRow();
+                    if (selectedRow > -1) {
+                        try {
+                            // Obtener los datos de la fila seleccionada
+                            txtPrueba.setText(prueba.llenarTabla(usuario.getId_usuario()).getValueAt(selectedRow, 0).toString());
+                        } catch (SQLException ex) {
+                            Logger.getLogger(VistaAceptarPruebas.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+                    }
+                }
+            }
+        });
+        } catch (SQLException ex) {
+            System.out.println("Error al llenar la tabla: " + ex.getMessage());
+            ex.printStackTrace(); // Imprimir la traza de la excepción para más detalles
+        } catch (RuntimeException ex) {
+            System.out.println("Error de ejecución: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
+    
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+        if(txtPrueba.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Complete el campo");
+        }else{
+            try {
+                int id = Integer.parseInt(txtPrueba.getText());
+                prueba.deletePrueba(id);
+                JOptionPane.showMessageDialog(null, "Se aceptó la prueba");
+                txtPrueba.setText(null);
+                llenarTabla();
+            } catch (SQLException ex) {
+                Logger.getLogger(VistaAceptarPruebas.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InvalidPruebaDataException ex) {
+                Logger.getLogger(VistaAceptarPruebas.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+    }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void txtPruebaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPruebaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPruebaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -214,13 +253,13 @@ public class VistaAceptarPruebas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnReversa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtPrueba;
     // End of variables declaration//GEN-END:variables
 }
