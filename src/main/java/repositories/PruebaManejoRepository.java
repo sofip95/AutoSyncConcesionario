@@ -7,10 +7,12 @@ package repositories;
 import DTO.PruebaManejo;
 import com.mycompany.autosyncconcesionario.DatabaseConfig;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -23,9 +25,11 @@ public class PruebaManejoRepository {
         String query = "SELECT * FROM Prueba_manejo WHERE id_prueba = " + id;
         try (Connection connection = DatabaseConfig.getConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(query)) {
             if (resultSet.next()) {
+                Date fecha = resultSet.getDate("fecha_prueba");
+                LocalDate fecha_prueba = fecha.toLocalDate();
                 return new PruebaManejo(
                         resultSet.getInt("id_prueba"),
-                        resultSet.getString("fecha_prueba"),
+                       fecha_prueba,
                         resultSet.getString("id_vehiculo"),
                         resultSet.getInt("id_cliente"),
                         resultSet.getInt("id_empleado")
@@ -55,9 +59,11 @@ public class PruebaManejoRepository {
         try (PreparedStatement stmt = DatabaseConfig.getConnection().prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
+                Date fecha = rs.getDate("fecha_prueba");
+                LocalDate fecha_prueba = fecha.toLocalDate();
                 PruebaManejo aux = new PruebaManejo(
                         rs.getInt("id_prueba"),
-                        rs.getString("fecha_prueba"),
+                        fecha_prueba,
                         rs.getString("id_vehiculo"),
                         rs.getInt("id_cliente"),
                         rs.getInt("id_empleado")
@@ -76,9 +82,11 @@ public class PruebaManejoRepository {
         try (PreparedStatement stmt = DatabaseConfig.getConnection().prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
+                Date fecha = rs.getDate("fecha_prueba");
+                LocalDate fecha_prueba = fecha.toLocalDate();
                 PruebaManejo aux = new PruebaManejo(
                         rs.getInt("id_prueba"),
-                        rs.getString("fecha_prueba"),
+                        fecha_prueba,
                         rs.getString("id_vehiculo"),
                         rs.getInt("id_cliente"),
                         rs.getInt("id_empleado")

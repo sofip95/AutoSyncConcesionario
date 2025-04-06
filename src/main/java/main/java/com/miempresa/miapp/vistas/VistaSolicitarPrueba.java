@@ -5,6 +5,20 @@
 package main.java.com.miempresa.miapp.vistas;
 
 import DTO.Usuario;
+import exceptions.InvalidPruebaDataException;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import services.PruebaManejoService;
+import services.UsuarioService;
+import services.VehiculoService;
 
 /**
  *
@@ -12,13 +26,24 @@ import DTO.Usuario;
  */
 public class VistaSolicitarPrueba extends javax.swing.JFrame {
     Usuario usuario;
+    UsuarioService usuarioService;
+    PruebaManejoService pruebaService;
+    VehiculoService vehiculoService;
     /**
      * Creates new form VistaSolicitarPrueba
      */
-    public VistaSolicitarPrueba(Usuario usuario) {
+    public VistaSolicitarPrueba(Usuario usuario) throws SQLException{
         initComponents();
         setLocationRelativeTo(this);
         this.usuario = usuario;
+           JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(jSpinner1, "yyyy-MM-dd");
+        jSpinner1.setEditor(dateEditor);
+        usuarioService = new UsuarioService();
+        pruebaService = new PruebaManejoService();
+        vehiculoService = new VehiculoService();
+        cargarCombo();
+        llenarTabla();
+        limpiarCampo();
     }
 
     /**
@@ -38,6 +63,10 @@ public class VistaSolicitarPrueba extends javax.swing.JFrame {
         btnSolicitar = new javax.swing.JButton();
         btnReversa = new javax.swing.JButton();
         jSpinner1 = new javax.swing.JSpinner();
+        jLabel3 = new javax.swing.JLabel();
+        jCombo = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        txtPlaca = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,35 +80,21 @@ public class VistaSolicitarPrueba extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"KDV331", "Volkswagen", "Golf", "2020", "Rojo"},
-                {"RET567", "Toyota", "Corolla", "2019", "Blanco"},
-                {"JHT658", "Ford", "Mustang", "2021", "Negro"},
-                {"LHN906", "Honda", "Civic", "208", "Azul"},
-                {"GUT850", "Chevrolet", "Cruze", "2022", null}
+
             },
             new String [] {
-                "Placa", "Marca", "Modelo", "Año", "Color"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         jScrollPane1.setViewportView(jTable1);
 
         btnSolicitar.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         btnSolicitar.setText("Solicitar Prueba");
+        btnSolicitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSolicitarActionPerformed(evt);
+            }
+        });
 
         btnReversa.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         btnReversa.setText("←");
@@ -89,7 +104,13 @@ public class VistaSolicitarPrueba extends javax.swing.JFrame {
             }
         });
 
-        jSpinner1.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.HOUR_OF_DAY));
+        jSpinner1.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.DAY_OF_WEEK));
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel3.setText("Seleccionar Empleado");
+
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel4.setText("Placa Vehiculo Seleccionado:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -112,14 +133,29 @@ public class VistaSolicitarPrueba extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(96, 96, 96))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(96, 96, 96))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(48, 48, 48))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(105, 105, 105))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(81, 81, 81))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addContainerGap())))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(158, 158, 158)
+                        .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,10 +167,20 @@ public class VistaSolicitarPrueba extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(btnSolicitar)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSolicitar))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
@@ -164,6 +210,92 @@ public class VistaSolicitarPrueba extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnReversaActionPerformed
 
+    private void btnSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitarActionPerformed
+        // TODO add your handling code here:
+        if(isDateValid()||!txtPlaca.getText().isEmpty()){
+         java.util.Date fecha = (java.util.Date) jSpinner1.getValue();
+        LocalDate fecha_prueba = fecha.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+         String placa = txtPlaca.getText();
+         int empleado = Integer.parseInt(jCombo.getSelectedItem().toString());
+         int user = usuario.getId_usuario();
+         try {
+                boolean respuesta = pruebaService.createPrueba(fecha_prueba, placa, user, empleado);
+                if (respuesta) {
+                    JOptionPane.showMessageDialog(null, "Se registro con exito");
+                    llenarTabla();
+                    limpiarCampo();
+                } else {
+                    JOptionPane.showMessageDialog(null, "invalidos");
+                }
+            } catch (RuntimeException ex) {
+                System.out.println(ex.getMessage());
+
+                ex.getMessage();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+
+            } catch (InvalidPruebaDataException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }else{
+        JOptionPane.showMessageDialog(null, "Asegurese que todos los campos tienen valor");
+        }
+    }//GEN-LAST:event_btnSolicitarActionPerformed
+
+     private boolean isDateValid() {
+        java.util.Date selectedDate = (java.util.Date) jSpinner1.getValue();
+        if (selectedDate == null) {
+            return false; // La fecha es nula
+        }
+
+        // Convertir java.util.Date a LocalDate
+        LocalDate localDate = selectedDate.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+        LocalDate today = LocalDate.now();
+
+        // Verifica que la fecha no sea anterior a hoy
+        return !localDate.isBefore(today);
+    }
+    
+    private void cargarCombo() throws SQLException{
+    jCombo.removeAllItems();
+        for (int i = 0; i < usuarioService.listarEmpleados().size(); i++) {
+            jCombo.addItem(String.valueOf(usuarioService.listarEmpleados().get(i).getId_usuario()));
+        }
+    }
+    private void llenarTabla()throws SQLException{
+             try {
+            jTable1.setModel(vehiculoService.llenarTabla());
+                    jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                // Verificar que la selección no sea un cambio de selección
+                if (!e.getValueIsAdjusting()) {
+                    int selectedRow = jTable1.getSelectedRow();
+                    if (selectedRow > -1) {
+                        try {
+                            // Obtener los datos de la fila seleccionada
+                            txtPlaca.setText(vehiculoService.llenarTabla().getValueAt(selectedRow, 0).toString());
+                        } catch (SQLException ex) {
+                            Logger.getLogger(VistaAceptarPruebas.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
+
+                    }
+                }
+            }
+        });
+        } catch (SQLException ex) {
+            System.out.println("Error al llenar la tabla: " + ex.getMessage());
+            ex.printStackTrace(); // Imprimir la traza de la excepción para más detalles
+        } catch (RuntimeException ex) {
+            System.out.println("Error de ejecución: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
+    private void limpiarCampo(){
+    txtPlaca.setText(null);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -202,11 +334,15 @@ public class VistaSolicitarPrueba extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnReversa;
     private javax.swing.JButton btnSolicitar;
+    private javax.swing.JComboBox<String> jCombo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField txtPlaca;
     // End of variables declaration//GEN-END:variables
 }

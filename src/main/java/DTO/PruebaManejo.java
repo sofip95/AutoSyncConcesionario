@@ -4,6 +4,8 @@
  */
 package DTO;
 
+import java.time.LocalDate;
+
 
 /**
  *
@@ -11,12 +13,12 @@ package DTO;
  */
 public class PruebaManejo {
     private int id_prueba;
-    private String fecha_prueba;
+    private LocalDate fecha_prueba;
     private String id_vehiculo;
     private int id_cliente;
     private int id_empleado;
 
-    public PruebaManejo(int id_prueba, String fecha_prueba, String id_vehiculo, int id_cliente, int id_empleado) {
+    public PruebaManejo(int id_prueba, LocalDate fecha_prueba, String id_vehiculo, int id_cliente, int id_empleado) {
         this.id_prueba = id_prueba;
         this.fecha_prueba = fecha_prueba;
         this.id_vehiculo = id_vehiculo;
@@ -34,11 +36,11 @@ public class PruebaManejo {
         this.id_prueba = id_prueba;
     }
 
-    public String getFecha_prueba() {
+    public LocalDate getFecha_prueba() {
         return fecha_prueba;
     }
 
-    public void setFecha_prueba(String fecha_prueba) {
+    public void setFecha_prueba(LocalDate fecha_prueba) {
         this.fecha_prueba = fecha_prueba;
     }
 
