@@ -16,14 +16,14 @@ import validators.VentaValidator;
  * @author Victus
  */
 public class VentaService {
-    
+
     private VentaRepository ventaRepository = new VentaRepository();
 
     public Venta getVentaById(int id) throws SQLException {
         return ventaRepository.findById(id);
     }
 
-    public void createVenta( int cliente, String vehiculo, String fecha_venta, float precio_venta) throws
+    public void createVenta(int cliente, String vehiculo, String fecha_venta, float precio_venta) throws
             SQLException, InvalidVentaDataException {
         if (!VentaValidator.validateFecha(fecha_venta) || !VentaValidator.validatePrecio(precio_venta)) {
             throw new InvalidVentaDataException("Datos inválidos");
@@ -33,8 +33,8 @@ public class VentaService {
 
         ventaRepository.save(venta);
     }
-    
-     public ArrayList<Venta> listarVentas(int id_cliente) throws SQLException{
-    return ventaRepository.listarVentas(id_cliente);
+
+    public ArrayList<Venta> listarVentas(int id_cliente) throws SQLException {
+        return ventaRepository.listarVentas(id_cliente);
     }
 }
