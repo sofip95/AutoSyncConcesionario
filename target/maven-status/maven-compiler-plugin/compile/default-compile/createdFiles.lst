@@ -5,6 +5,7 @@ main\java\com\miempresa\miapp\vistas\VistaCliente.class
 main\java\com\miempresa\miapp\vistas\VistaComprarVehiculo.class
 services\PruebaManejoService.class
 main\java\com\miempresa\miapp\vistas\VistaCliente$2.class
+main\java\com\miempresa\miapp\vistas\VistaMiInfo$6.class
 main\java\com\miempresa\miapp\vistas\VistaComprarVehiculo$2.class
 main\java\com\miempresa\miapp\vistas\VistaHistorial.class
 validators\VentaValidator.class

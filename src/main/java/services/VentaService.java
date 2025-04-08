@@ -33,6 +33,7 @@ public class VentaService {
 
         ventaRepository.save(venta);
     }
+    
      public ArrayList<Venta> listarVentas(int id_cliente) throws SQLException{
     return ventaRepository.listarVentas(id_cliente);
     }

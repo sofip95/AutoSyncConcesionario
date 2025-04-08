@@ -5,13 +5,18 @@
 package main.java.com.miempresa.miapp.vistas;
 
 import DTO.Usuario;
+import javax.swing.JOptionPane;
+import services.UsuarioService;
 
 /**
  *
  * @author JUAN
  */
 public class VistaMiInfo extends javax.swing.JFrame {
+
     Usuario usuario;
+    UsuarioService service;
+
     /**
      * Creates new form VistaMiInfo
      */
@@ -19,6 +24,27 @@ public class VistaMiInfo extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(this);
         this.usuario = usuario;
+        cargarDatos(this.usuario);
+    }
+
+    public boolean verificarCampos() {
+        return !txtId.getText().isEmpty()
+                && !txtNombre.getText().isEmpty()
+                && !txtEdad.getText().isEmpty()
+                && !txtTelefono.getText().isEmpty()
+                && !txtCorreo.getText().isEmpty()
+                && !txtIntereses.getText().isEmpty()
+                && !txtPassword.getText().isEmpty();
+    }
+
+    public void cargarDatos(Usuario usuario) {
+        txtId.setText(String.valueOf(usuario.getId_usuario()));
+        txtNombre.setText(usuario.getNombre());
+        txtEdad.setText(String.valueOf(usuario.getEdad()));
+        txtTelefono.setText(usuario.getTelefono());
+        txtCorreo.setText(usuario.getCorreo());
+        txtIntereses.setText(usuario.getDescripcion());
+        txtPassword.setText(usuario.getContrasenia());
     }
 
     /**
@@ -50,7 +76,7 @@ public class VistaMiInfo extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Mi Informacion", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Dialog", 1, 36))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mi Informacion", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Dialog", 1, 36))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         jLabel1.setText("id:");
@@ -73,34 +99,7 @@ public class VistaMiInfo extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         jLabel7.setText("Contraseña:");
 
-        txtPassword.setText("3");
-        txtPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPasswordActionPerformed(evt);
-            }
-        });
-
-        txtIntereses.setText("Desarrollo web");
-
-        txtCorreo.setText("juan@gmail.com");
-
-        txtTelefono.setText("3138796677");
-        txtTelefono.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTelefonoActionPerformed(evt);
-            }
-        });
-
-        txtEdad.setText("18");
-        txtEdad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEdadActionPerformed(evt);
-            }
-        });
-
-        txtNombre.setText("juan");
-
-        txtId.setText("3");
+        txtId.setEditable(false);
 
         btnReversa.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         btnReversa.setText("←");
@@ -112,6 +111,11 @@ public class VistaMiInfo extends javax.swing.JFrame {
 
         btnEditar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -223,17 +227,26 @@ public class VistaMiInfo extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnReversaActionPerformed
 
-    private void txtEdadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEdadActionPerformed
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtEdadActionPerformed
+        if (verificarCampos()) {
+            int id = Integer.parseInt(txtId.getText());
+            String nombre = txtNombre.getText();
+            int edad = Integer.parseInt(txtEdad.getText());
+            String telefono = txtTelefono.getText();
+            String correo = txtCorreo.getText();
+            String descripcion = txtIntereses.getText();
+            String password = txtPassword.getText();
 
-    private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTelefonoActionPerformed
-
-    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPasswordActionPerformed
+            try {
+                service.updateUser(id, password, nombre, edad, telefono, correo, descripcion, "Cliente");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Llene todos los campos para editar");
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * @param args the command line arguments
