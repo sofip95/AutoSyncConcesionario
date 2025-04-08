@@ -7,10 +7,12 @@ package repositories;
 import DTO.Venta;
 import com.mycompany.autosyncconcesionario.DatabaseConfig;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -24,11 +26,13 @@ public class VentaRepository {
 
         try (Connection connection = DatabaseConfig.getConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(query)) {
             if (resultSet.next()) {
+                 Date fecha = resultSet.getDate("fecha_venta");
+                LocalDate fecha_v = fecha.toLocalDate();
                 return new Venta(
                         resultSet.getInt("id_venta"),
                         resultSet.getInt("id_cliente"),
                         resultSet.getString("id_vehiculo"),
-                        resultSet.getString("fecha_venta"),
+                        fecha_v,
                         resultSet.getFloat("precio_venta")
                 );
             } else {
@@ -52,11 +56,13 @@ public class VentaRepository {
         try (PreparedStatement stmt = DatabaseConfig.getConnection().prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
+                 Date fecha = rs.getDate("fecha_venta");
+                LocalDate fecha_v = fecha.toLocalDate();
                 Venta aux = new Venta(
                         rs.getInt("id_venta"),
                         rs.getInt("id_cliente"),
                         rs.getString("id_vehiculo"),
-                        rs.getString("fecha_venta"),
+                        fecha_v,
                         rs.getFloat("precio_venta")
                 );
                 ventas.add(aux);

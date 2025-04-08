@@ -5,6 +5,16 @@
 package main.java.com.miempresa.miapp.vistas;
 
 import DTO.Usuario;
+import DTO.Vehiculo;
+import exceptions.InvalidVehiculoDataException;
+import exceptions.InvalidVentaDataException;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import services.VehiculoService;
+import services.VentaService;
 
 /**
  *
@@ -12,15 +22,32 @@ import DTO.Usuario;
  */
 public class VistaComprarVehiculo extends javax.swing.JFrame {
     Usuario usuario; 
+    VehiculoService vehiculoS;
+    VentaService ventaS;
     /**
      * Creates new form VistaCompraVehiculo
      */
-    public VistaComprarVehiculo(Usuario usuario) {
+    public VistaComprarVehiculo(Usuario usuario) throws SQLException {
         initComponents();
         setLocationRelativeTo(this);
         this.usuario = usuario;
+        vehiculoS = new VehiculoService();
+        ventaS = new VentaService();
+        llenarTabla();
     }
 
+        private void llenarTabla() throws SQLException {
+        try {
+            jTable1.setModel(vehiculoS.llenarTabla());
+        } catch (SQLException ex) {
+            System.out.println("Error al llenar la tabla: " + ex.getMessage());
+            ex.printStackTrace(); 
+        } catch (RuntimeException ex) {
+            System.out.println("Error de ejecución: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,7 +64,7 @@ public class VistaComprarVehiculo extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         btnReversa = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtPlaca = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,35 +75,21 @@ public class VistaComprarVehiculo extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"KDV331", "Volkswagen", "Golf", "2020", "Rojo", "25.000"},
-                {"RET567", "Toyota", "Corolla", "2019", "Blanco", "22.500"},
-                {"JHT658", "Ford", "Mustang", "2021", "Negro", "45.000"},
-                {"LHN906", "Honda", "Civic", "2018", "Azul", "20.000"},
-                {"GUT850", "Chevrolet", "Cruze", "2022", "Gris", "23.000"}
+
             },
             new String [] {
-                "Placa", "Marca", "Modelo", "Año", "Color", "Precio"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jButton1.setText("Comprar Vehiculo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         btnReversa.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         btnReversa.setText("←");
@@ -89,9 +102,9 @@ public class VistaComprarVehiculo extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel2.setText("Vehiculo Seleccionado:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtPlaca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtPlacaActionPerformed(evt);
             }
         });
 
@@ -117,7 +130,7 @@ public class VistaComprarVehiculo extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(9, 9, 9)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(163, 163, 163))
         );
         jPanel1Layout.setVerticalGroup(
@@ -133,7 +146,7 @@ public class VistaComprarVehiculo extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14)
                 .addComponent(jButton1)
                 .addContainerGap(48, Short.MAX_VALUE))
@@ -165,9 +178,36 @@ public class VistaComprarVehiculo extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnReversaActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtPlacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPlacaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtPlacaActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if(txtPlaca.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Ingrese una placa");
+        }else{
+            try {
+                String placa = txtPlaca.getText();
+                Vehiculo aux = vehiculoS.getVehiculoById(placa);
+                float precio = aux.getPrecio_venta();
+                LocalDate fecha = LocalDate.now();
+                boolean validate =ventaS.createVenta(usuario.getId_usuario(), placa, fecha, precio);
+                boolean v = vehiculoS.deleteVehiculo(placa);
+                if(validate && v){
+                JOptionPane.showMessageDialog(null, "Se registró la venta con éxito");
+                }else{
+                JOptionPane.showMessageDialog(null, "No se pudo registrar la venta");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(VistaComprarVehiculo.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InvalidVentaDataException ex) {
+                Logger.getLogger(VistaComprarVehiculo.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InvalidVehiculoDataException ex) {
+                Logger.getLogger(VistaComprarVehiculo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -213,6 +253,6 @@ public class VistaComprarVehiculo extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtPlaca;
     // End of variables declaration//GEN-END:variables
 }

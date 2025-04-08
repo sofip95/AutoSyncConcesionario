@@ -9,10 +9,6 @@ package validators;
  * @author Victus
  */
 public class VentaValidator {
-    
-    public static boolean validateFecha(String fecha) {
-        return fecha != null && !fecha.trim().isEmpty();
-    }
 
     public static boolean validatePrecio(float precio) {
         return precio > 0.0;

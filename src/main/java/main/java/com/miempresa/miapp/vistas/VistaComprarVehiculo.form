@@ -77,7 +77,7 @@
                                   <EmptySpace min="9" pref="9" max="-2" attributes="0"/>
                                   <Component id="jLabel2" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="jTextField1" min="-2" pref="169" max="-2" attributes="0"/>
+                              <Component id="txtPlaca" min="-2" pref="169" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -100,7 +100,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="16" max="32767" attributes="0"/>
-                  <Component id="jTextField1" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtPlaca" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                   <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="48" max="32767" attributes="0"/>
@@ -127,50 +127,7 @@
             <Component class="javax.swing.JTable" name="jTable1">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="6" rowCount="5">
-                    <Column editable="false" title="Placa" type="java.lang.String">
-                      <Data value="KDV331"/>
-                      <Data value="RET567"/>
-                      <Data value="JHT658"/>
-                      <Data value="LHN906"/>
-                      <Data value="GUT850"/>
-                    </Column>
-                    <Column editable="false" title="Marca" type="java.lang.String">
-                      <Data value="Volkswagen"/>
-                      <Data value="Toyota"/>
-                      <Data value="Ford"/>
-                      <Data value="Honda"/>
-                      <Data value="Chevrolet"/>
-                    </Column>
-                    <Column editable="false" title="Modelo" type="java.lang.String">
-                      <Data value="Golf"/>
-                      <Data value="Corolla"/>
-                      <Data value="Mustang"/>
-                      <Data value="Civic"/>
-                      <Data value="Cruze"/>
-                    </Column>
-                    <Column editable="false" title="A&#xf1;o" type="java.lang.String">
-                      <Data value="2020"/>
-                      <Data value="2019"/>
-                      <Data value="2021"/>
-                      <Data value="2018"/>
-                      <Data value="2022"/>
-                    </Column>
-                    <Column editable="false" title="Color" type="java.lang.String">
-                      <Data value="Rojo"/>
-                      <Data value="Blanco"/>
-                      <Data value="Negro"/>
-                      <Data value="Azul"/>
-                      <Data value="Gris"/>
-                    </Column>
-                    <Column editable="false" title="Precio" type="java.lang.String">
-                      <Data value="25.000"/>
-                      <Data value="22.500"/>
-                      <Data value="45.000"/>
-                      <Data value="20.000"/>
-                      <Data value="23.000"/>
-                    </Column>
-                  </Table>
+                  <Table columnCount="0" rowCount="0"/>
                 </Property>
               </Properties>
             </Component>
@@ -183,6 +140,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Comprar Vehiculo"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnReversa">
           <Properties>
@@ -203,9 +163,9 @@
             <Property name="text" type="java.lang.String" value="Vehiculo Seleccionado:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
+        <Component class="javax.swing.JTextField" name="txtPlaca">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPlacaActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
