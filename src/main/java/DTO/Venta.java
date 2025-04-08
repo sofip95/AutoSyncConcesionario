@@ -4,6 +4,8 @@
  */
 package DTO;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author sofia
@@ -13,10 +15,10 @@ public class Venta {
     private int id_venta;
     private int cliente;
     private String vehiculo;
-    private String fecha_venta;
+    private LocalDate fecha_venta;
     private float precio_venta;
 
-    public Venta(int id_venta, int cliente, String vehiculo, String fecha_venta, float precio_venta) {
+    public Venta(int id_venta, int cliente, String vehiculo, LocalDate fecha_venta, float precio_venta) {
         this.id_venta = id_venta;
         this.cliente = cliente;
         this.vehiculo = vehiculo;
@@ -48,11 +50,11 @@ public class Venta {
         this.vehiculo = vehiculo;
     }
 
-    public String getFecha_venta() {
+    public LocalDate getFecha_venta() {
         return fecha_venta;
     }
 
-    public void setFecha_venta(String fecha_venta) {
+    public void setFecha_venta(LocalDate fecha_venta) {
         this.fecha_venta = fecha_venta;
     }
 
@@ -63,5 +65,6 @@ public class Venta {
     public void setPrecio_venta(float precio_venta) {
         this.precio_venta = precio_venta;
     }
+
 
 }

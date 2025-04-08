@@ -5,7 +5,6 @@ main\java\com\miempresa\miapp\vistas\VistaCliente.class
 main\java\com\miempresa\miapp\vistas\VistaComprarVehiculo.class
 services\PruebaManejoService.class
 main\java\com\miempresa\miapp\vistas\VistaCliente$2.class
-main\java\com\miempresa\miapp\vistas\VistaMiInfo$6.class
 main\java\com\miempresa\miapp\vistas\VistaComprarVehiculo$2.class
 main\java\com\miempresa\miapp\vistas\VistaHistorial.class
 validators\VentaValidator.class
@@ -28,7 +27,6 @@ main\java\com\miempresa\miapp\vistas\VistaAdminGeneral$2.class
 main\java\com\miempresa\miapp\vistas\VistaGestionClientes$9.class
 main\java\com\miempresa\miapp\vistas\VistaGestionEmpleados$5.class
 main\java\com\miempresa\miapp\vistas\VistaAdminGeneral.class
-main\java\com\miempresa\miapp\vistas\VistaMiInfo$5.class
 main\java\com\miempresa\miapp\vistas\VistaEmpleado.class
 main\java\com\miempresa\miapp\vistas\vista$1.class
 main\java\com\miempresa\miapp\vistas\VistaAceptarPruebas.class
@@ -69,7 +67,6 @@ main\java\com\miempresa\miapp\vistas\VistaGestionEmpleados$7.class
 main\java\com\miempresa\miapp\vistas\VistaHistorial$3.class
 main\java\com\miempresa\miapp\vistas\VistaSolicitarPrueba$2.class
 validators\PruebaValidator.class
-main\java\com\miempresa\miapp\vistas\VistaMiInfo$4.class
 main\java\com\miempresa\miapp\vistas\VistaAceptarPruebas$4.class
 main\java\com\miempresa\miapp\vistas\VistaComprarVehiculo$4.class
 main\java\com\miempresa\miapp\vistas\VistaGestionEmpleados$4.class

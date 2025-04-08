@@ -7,6 +7,7 @@ package services;
 import DTO.Venta;
 import exceptions.InvalidVentaDataException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import repositories.VentaRepository;
 import validators.VentaValidator;
@@ -23,15 +24,16 @@ public class VentaService {
         return ventaRepository.findById(id);
     }
 
-    public void createVenta(int cliente, String vehiculo, String fecha_venta, float precio_venta) throws
+    public boolean createVenta(int cliente, String vehiculo, LocalDate fecha_venta, float precio_venta) throws
             SQLException, InvalidVentaDataException {
-        if (!VentaValidator.validateFecha(fecha_venta) || !VentaValidator.validatePrecio(precio_venta)) {
+        if ( !VentaValidator.validatePrecio(precio_venta)) {
             throw new InvalidVentaDataException("Datos inválidos");
         }
 
         Venta venta = new Venta(0, cliente, vehiculo, fecha_venta, precio_venta);
 
         ventaRepository.save(venta);
+        return true;
     }
 
     public ArrayList<Venta> listarVentas(int id_cliente) throws SQLException {

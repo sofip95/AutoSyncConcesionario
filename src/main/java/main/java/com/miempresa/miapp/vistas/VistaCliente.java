@@ -189,10 +189,14 @@ public class VistaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPruebaMActionPerformed
 
     private void btnVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVehiculoActionPerformed
-        // TODO add your handling code here:
-        VistaComprarVehiculo vc = new VistaComprarVehiculo(usuario);
-        vc.setVisible(true);
-        this.dispose();
+        try {
+            // TODO add your handling code here:
+            VistaComprarVehiculo vc = new VistaComprarVehiculo(usuario);
+            vc.setVisible(true);
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(VistaCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnVehiculoActionPerformed
 
     /**
