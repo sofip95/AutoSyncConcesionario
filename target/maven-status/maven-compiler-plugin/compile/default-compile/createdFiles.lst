@@ -64,7 +64,6 @@ com\mycompany\autosyncconcesionario\AutoSyncConcesionario.class
 main\java\com\miempresa\miapp\vistas\VistaEmpleado$6.class
 main\java\com\miempresa\miapp\vistas\VistaEmpleado$3.class
 main\java\com\miempresa\miapp\vistas\VistaGestionEmpleados$7.class
-main\java\com\miempresa\miapp\vistas\VistaHistorial$3.class
 main\java\com\miempresa\miapp\vistas\VistaSolicitarPrueba$2.class
 validators\PruebaValidator.class
 main\java\com\miempresa\miapp\vistas\VistaAceptarPruebas$4.class

@@ -193,8 +193,8 @@ public class VistaComprarVehiculo extends javax.swing.JFrame {
                 float precio = aux.getPrecio_venta();
                 LocalDate fecha = LocalDate.now();
                 boolean validate =ventaS.createVenta(usuario.getId_usuario(), placa, fecha, precio);
-                boolean v = vehiculoS.deleteVehiculo(placa);
-                if(validate && v){
+               
+                if(validate ){
                 JOptionPane.showMessageDialog(null, "Se registró la venta con éxito");
                 }else{
                 JOptionPane.showMessageDialog(null, "No se pudo registrar la venta");
@@ -202,8 +202,6 @@ public class VistaComprarVehiculo extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(VistaComprarVehiculo.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InvalidVentaDataException ex) {
-                Logger.getLogger(VistaComprarVehiculo.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InvalidVehiculoDataException ex) {
                 Logger.getLogger(VistaComprarVehiculo.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
