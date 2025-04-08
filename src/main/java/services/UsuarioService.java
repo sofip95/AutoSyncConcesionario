@@ -8,6 +8,7 @@ import exceptions.InvalidUsuarioDataException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import DTO.Usuario;
+import DTO.Venta;
 import javax.swing.table.DefaultTableModel;
 import repositories.UsuarioRepository;
 import validators.UsuarioValidator;
@@ -17,6 +18,8 @@ import validators.UsuarioValidator;
  * @author sofia
  */
 public class UsuarioService {
+
+    private VentaService servicioVenta = new VentaService();
 
     private UsuarioRepository usuarioRepository = new UsuarioRepository();
 
@@ -69,7 +72,7 @@ public class UsuarioService {
         usuarioRepository.deleteUser(id);
         return true;
     }
-    
+
     public ArrayList<Usuario> listarEmpleados() throws SQLException {
         return usuarioRepository.listarEmpleados();
     }
@@ -95,13 +98,12 @@ public class UsuarioService {
             }
         } catch (SQLException ex) {
             System.out.println("Error al listar empleados: " + ex.getMessage());
-            throw ex; 
+            throw ex;
         }
 
         return modelo;
     }
-    
-    
+
     public DefaultTableModel llenarTablaCliente() throws SQLException {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.setColumnIdentifiers(new Object[]{"Id", "Nombre", "Edad", "Correo", "Intereses"});
@@ -119,9 +121,34 @@ public class UsuarioService {
             }
         } catch (SQLException ex) {
             System.out.println("Error al listar cliente: " + ex.getMessage());
-            throw ex; 
+            throw ex;
         }
 
         return modelo;
     }
+
+    public DefaultTableModel llenarHistorialCompra(int id) throws SQLException {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.setColumnIdentifiers(new Object[]{"id Venta", "Placa", "Marca", "Precio", "Fecha compra"});
+
+        try {
+            ArrayList<Venta> historialCompras = servicioVenta.listarVentas(id);
+            for (int i = 0; i < historialCompras.size(); i++) {
+                Venta aux = historialCompras.get(i);
+                modelo.addRow(new Object[]{
+                    aux.getId_venta(),
+                    aux.getVehiculo(),
+                    aux.getVehiculo(),
+                    aux.getPrecio_venta(),
+                    aux.getFecha_venta()
+                });
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al listar el historial de compras: " + ex.getMessage());
+            throw ex;
+        }
+
+        return modelo;
+    }
+
 }
