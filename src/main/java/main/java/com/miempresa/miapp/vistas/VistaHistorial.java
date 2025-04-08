@@ -15,34 +15,28 @@ import services.VentaService;
  * @author JUAN
  */
 public class VistaHistorial extends javax.swing.JFrame {
+
     Usuario usuario;
     UsuarioService servicioUsuario;
+    VentaService ventaS;
+
     /**
      * Creates new form NewJFrame
      */
-    public VistaHistorial(Usuario usuario) {
-    initComponents();
-    setLocationRelativeTo(this);
-    this.usuario = usuario;
-    try {
-        llenarHistorialCompras(this.usuario);
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(
-            this, 
-            "Error al cargar el historial: " + ex.getMessage(),
-            "Error", 
-            JOptionPane.ERROR_MESSAGE
-        );
-        ex.printStackTrace();
+    public VistaHistorial(Usuario usuario) throws SQLException {
+        initComponents();
+        setLocationRelativeTo(this);
+        this.usuario = usuario;
+        ventaS = new VentaService();
+        llenarHistorialCompras(usuario);
     }
-}
-    
+
     private void llenarHistorialCompras(Usuario usuario) throws SQLException {
         try {
-            jTable1.setModel(servicioUsuario.llenarHistorialCompra(usuario.getId_usuario()));
+            jTable1.setModel(ventaS.llenarTabla(usuario.getId_usuario()));
         } catch (SQLException ex) {
             System.out.println("Error al llenar el historial de compra: " + ex.getMessage());
-            ex.printStackTrace(); 
+            ex.printStackTrace();
         } catch (RuntimeException ex) {
             System.out.println("Error de ejecución: " + ex.getMessage());
             ex.printStackTrace();
